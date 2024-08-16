@@ -21,9 +21,15 @@ public class WebResourceController : MonoBehaviour
 
     private void Start()
     {
-        webResource = new WebResource(defaultWebCount);
-
         if (WebResourceChangedEvent == null) WebResourceChangedEvent = new UnityEvent<int>();
+
+        webResource = new WebResource(defaultWebCount);
+        WebResourceChangedEvent?.Invoke(GetWebCount());
+    }
+
+    private void OnDestroy()
+    {
+        WebResourceChangedEvent.RemoveAllListeners();
     }
 
     public void IncrementWebCount(int count)

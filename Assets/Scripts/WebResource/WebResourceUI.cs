@@ -15,11 +15,6 @@ public class WebCountUI : MonoBehaviour
         UpdateWebCountText(0);
     }
 
-    private void OnDestroy()
-    {
-        WebResourceController.Instance.WebResourceChangedEvent.RemoveListener(UpdateWebCountText);
-    }
-
     void UpdateWebCountText(int webCount)
     {
         webCountText.text = "Web Count: " + webCount;
