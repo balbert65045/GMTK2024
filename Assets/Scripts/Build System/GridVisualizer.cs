@@ -7,10 +7,34 @@ public class GridVisualizer : MonoBehaviour
     [SerializeField] private float _tileSize = 1.0f;
     [SerializeField] private float _gridScale = 0.98f;
 
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         CreateGrid();
+    }
+
+    private void Start()
+    {
+        HideGrid();
+    }
+
+    public void HideGrid()
+    {
+        Renderer[] tiles = GetComponentsInChildren<Renderer>();
+        foreach(Renderer tile in tiles)
+        {
+            tile.enabled = false;
+        }
+    }
+
+    public void ShowGrid()
+    {
+        Renderer[] tiles = GetComponentsInChildren<Renderer>();
+        foreach (Renderer tile in tiles)
+        {
+            tile.enabled = true;
+        }
     }
 
     private void CreateGrid()
@@ -26,7 +50,7 @@ public class GridVisualizer : MonoBehaviour
     {
         for (int y = 0; y < _gridHeight; y++)
         {
-            // create grid tiles
+
             GameObject gridTile = GameObject.CreatePrimitive(PrimitiveType.Cube);
             gridTile.transform.parent = transform;
             gridTile.transform.position = new Vector3(startX + x * _tileSize, startY + y * _tileSize, 0);

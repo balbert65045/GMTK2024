@@ -303,7 +303,7 @@ public class GridTile : MonoBehaviour
     {
         RaycastHit hit;
         Physics.Raycast(transform.position, direction, out hit, 1.0f);
-        Debug.DrawRay(transform.position, direction, Color.red, 100.0f);
+        //Debug.DrawRay(transform.position, direction, Color.red, 100.0f);
         if (hit.collider != null)
         {
             Debug.Log(hit.collider.gameObject.name);
