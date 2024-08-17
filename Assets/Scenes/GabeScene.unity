@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 775349268}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -332,8 +332,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbf6c7c711ac13c6aac0ca6b61f910b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSelected: 1
-  gridSize: 1
+  _isSelected: 1
+  tileWidthCount: 1
+  tileHeightCount: 1
 --- !u!1 &1595965685
 GameObject:
   m_ObjectHideFlags: 0

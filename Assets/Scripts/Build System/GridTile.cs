@@ -9,7 +9,6 @@ public class GridTile : MonoBehaviour
     [SerializeField] private float _transparencyWhenNotHovered = 0.5f;
     [SerializeField] private float _gridScale = 0.95f;
 
-    // Start is called before the first frame update
     void Start()
     {
         gameObject.tag = "GridTile";
