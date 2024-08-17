@@ -250,7 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b47498e536d44cfb29f46f10f67713, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnItemChangedEvent:
+  ItemChangedEvent:
     m_PersistentCalls:
       m_Calls: []
   defaultBlocks:
@@ -270,6 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e9d92cf78314eafaa6c6a501006ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InventoryUIPanel: {fileID: 2208615948330636316}
   InventorySlotsContainer: {fileID: 3568043866713616614}
   slotPrefab: {fileID: 7777383828471603793, guid: 674520bfa1ac94527b4b97817d00fdc7, type: 3}
 --- !u!1 &8690114015785552299
