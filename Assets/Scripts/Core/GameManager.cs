@@ -23,9 +23,13 @@ public class GameManager : MonoBehaviour
     public void ToggleGameMode()
     {
         if (Mode == GameMode.BUILD_MODE)
+        {
             Mode = GameMode.PLATFORM_MODE;
+        }
         else
+        {
             Mode = GameMode.BUILD_MODE;
+        }
     }
 }
 

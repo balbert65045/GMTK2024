@@ -6,6 +6,7 @@ TagManager:
   tags:
   - GridTile
   - Platform
+  - Block
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - UI
   - Platform
   - Projectile
-  - 
+  - Block
   - 
   - 
   - 
