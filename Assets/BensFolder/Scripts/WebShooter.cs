@@ -48,7 +48,7 @@ public class WebShooter : MonoBehaviour
 
     public void FireWeb()
     {
-
+        WebResourceController.Instance.DecrementWebCount(1);
         currentProjectile = Instantiate(WebProjectilePrefab, transform.position + .1f * Vector3.up, Quaternion.identity);
         currentProjectile.GetComponent<Rigidbody2D>().velocity = WebDir * webShotSpeed;
     }
