@@ -33,6 +33,16 @@ public class InventoryController: MonoBehaviour
         Initialize();
     }
 
+    // 1 - ...
+    public void SelectBlockViaHotKey(int num)
+    {
+        if (num > 0 && num <= InventoryItems.Count)
+        {
+            Debug.Log("Hotkey: " + InventoryItems[num - 1].BlockData.Type.ToString());
+            SelectedBlockTypeChangedEvent?.Invoke(InventoryItems[num - 1].BlockData.Type);
+        }
+    }
+
     void OnDestroy()
     {
         ItemChangedEvent.RemoveAllListeners();
