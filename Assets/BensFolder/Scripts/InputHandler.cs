@@ -24,11 +24,14 @@ public class InputHandler : MonoBehaviour
             GameManager.Instance.ToggleGameMode();
             if (GameManager.Instance.Mode == GameMode.BUILD_MODE)
             {
+                gridVisualizer.gameObject.SetActive(true);
                 gridVisualizer.ShowGrid();
             }
             else
             {
                 gridVisualizer.HideGrid();
+                gridVisualizer.gameObject.SetActive(false);
+
             }
             playerMovement.GetComponent<PlayerStateManager>().currentGodPointTouching.SwitchCam(GameManager.Instance.Mode);
         }

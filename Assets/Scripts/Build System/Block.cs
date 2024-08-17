@@ -71,6 +71,7 @@ public class Block : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.Mode != GameMode.BUILD_MODE) { return; }
         if (Input.GetMouseButtonDown(0))
         {
             _isDragging = true;
@@ -87,8 +88,9 @@ public class Block : MonoBehaviour
         }
     }
 
-    void FindSelectedTile()
+    public void FindSelectedTile()
     {
+        _gridTiles = GameObject.FindGameObjectsWithTag("GridTile");
         foreach (GameObject gridTile in _gridTiles)
         {
             GridTile gridScript = gridTile.GetComponent<GridTile>();
