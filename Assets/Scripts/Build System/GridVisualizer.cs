@@ -3,8 +3,9 @@ using UnityEngine;
 public class GridVisualizer : MonoBehaviour
 {
     [SerializeField] private int _gridWidth = 16;
-    [SerializeField] private int _gridHeight = 9;
+    [SerializeField] private int _gridHeight = 10;
     [SerializeField] private float _tileSize = 1.0f;
+    [SerializeField] private float _gridScale = 0.98f;
 
     // Start is called before the first frame update
     void Start()
@@ -14,29 +15,28 @@ public class GridVisualizer : MonoBehaviour
 
     private void CreateGrid()
     {
-        // Calculate the center position
-        float gridWidth = _gridWidth * _tileSize;
-        float gridHeight = _gridHeight * _tileSize;
 
-        // Calculate the starting positions to center the grid
-        float startX = -(gridWidth / 2.0f) + (_tileSize / 2.0f);
-        float startY = -(gridHeight / 2.0f) + (_tileSize / 2.0f);
+    float gridWidth = _gridWidth * _tileSize;
+    float gridHeight = _gridHeight * _tileSize;
 
-        for (int x = 0; x < _gridWidth; x++)
+    float startX = -(gridWidth / 2) + (_tileSize / 2);
+    float startY = -(gridHeight / 2) + (_tileSize / 2);
+
+    for (int x = 0; x < _gridWidth; x++)
+    {
+        for (int y = 0; y < _gridHeight; y++)
         {
-            for (int y = 0; y < _gridHeight; y++)
-            {
-                // Create a new GameObject
-                GameObject gridTile = GameObject.CreatePrimitive(PrimitiveType.Quad);
-                gridTile.transform.parent = transform;
-                gridTile.transform.position = new Vector3(startX + x * _tileSize, startY + y * _tileSize, 0);
+            // create grid tiles
+            GameObject gridTile = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            gridTile.transform.parent = transform;
+            gridTile.transform.position = new Vector3(startX + x * _tileSize, startY + y * _tileSize, 0);
 
-                // attach script to grid tile
-                gridTile.AddComponent<GridTile>();
+            // attach script to grid tile
+            gridTile.AddComponent<GridTile>();
 
-                // Adjust the scale of the tile to fit the desired size
-                gridTile.transform.localScale = new Vector3(_tileSize, _tileSize, 1);
-            }
+            // set the scale
+            gridTile.transform.localScale = new Vector3(_tileSize * _gridScale, _tileSize * _gridScale, 1);
         }
     }
+}
 }
