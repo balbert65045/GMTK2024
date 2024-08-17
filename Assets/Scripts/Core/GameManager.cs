@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public GameMode Mode;
+    public GameMode Mode { get; private set; }
+    public UnityEvent<GameMode> GameModeChangedEvent;
 
     private void Awake()
     {
@@ -17,7 +19,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Mode = GameMode.PLATFORM_MODE;
+        if (GameModeChangedEvent == null) GameModeChangedEvent = new UnityEvent<GameMode>();
+
+        Mode = GameMode.BUILD_MODE;
+        GameModeChangedEvent?.Invoke(Mode);
     }
 
     public void ToggleGameMode()
@@ -30,6 +35,7 @@ public class GameManager : MonoBehaviour
         {
             Mode = GameMode.BUILD_MODE;
         }
+        GameModeChangedEvent?.Invoke(Mode);
     }
 }
 
