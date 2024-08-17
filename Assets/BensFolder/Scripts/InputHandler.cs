@@ -7,6 +7,7 @@ public class InputHandler : MonoBehaviour
 {
     PlayerMovement playerMovement;
     WebShooter webShooter;
+    [SerializeField] GridVisualizer gridVisualizer;
 
     // Start is called before the first frame update
     void Awake()
@@ -18,6 +19,21 @@ public class InputHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && playerMovement.GetComponent<PlayerStateManager>().currentGodPointTouching != null) {
+            Move(Vector2.zero);
+            GameManager.Instance.ToggleGameMode();
+            if (GameManager.Instance.Mode == GameMode.BUILD_MODE)
+            {
+                gridVisualizer.ShowGrid();
+            }
+            else
+            {
+                gridVisualizer.HideGrid();
+            }
+            playerMovement.GetComponent<PlayerStateManager>().currentGodPointTouching.SwitchCam(GameManager.Instance.Mode);
+        }
+
+        if (GameManager.Instance.Mode != GameMode.PLATFORM_MODE) { return; }
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
         if (Input.GetKeyDown(KeyCode.Space))

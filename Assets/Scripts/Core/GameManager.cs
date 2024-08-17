@@ -3,7 +3,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public GameMode Mode { get; private set; }
+    public GameMode Mode;
 
     private void Awake()
     {
@@ -17,15 +17,19 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Mode = GameMode.BUILD_MODE;
+        Mode = GameMode.PLATFORM_MODE;
     }
 
     public void ToggleGameMode()
     {
         if (Mode == GameMode.BUILD_MODE)
+        {
             Mode = GameMode.PLATFORM_MODE;
+        }
         else
+        {
             Mode = GameMode.BUILD_MODE;
+        }
     }
 }
 
