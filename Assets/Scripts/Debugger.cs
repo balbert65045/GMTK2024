@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Debugger : MonoBehaviour
@@ -14,7 +12,7 @@ public class Debugger : MonoBehaviour
         {
             WebResourceController.Instance.DecrementWebCount(1);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha1))
+        else if (Input.GetKeyDown(KeyCode.Q))
         {
             GameManager.Instance.ToggleGameMode();
         }

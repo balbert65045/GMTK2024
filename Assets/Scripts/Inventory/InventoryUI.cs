@@ -19,6 +19,7 @@ public class InventoryUI : MonoBehaviour
         // TODO: Highlight if item selected through hotkeys
 
         UpdateSlotsUI();
+        ToggleInventoryUIPanel(GameManager.Instance.Mode);
     }
 
     void OnDestroy()
@@ -30,7 +31,7 @@ public class InventoryUI : MonoBehaviour
     {
         if (inventoryController.InventoryItems != null)
         {
-            Debug.Log(inventoryController.InventoryItems.Count);
+            Debug.Log("InventoryItems Count: " + inventoryController.InventoryItems.Count);
             if (slots.Count > inventoryController.InventoryItems.Count)
             {
                 for (int j = inventoryController.InventoryItems.Count; j < slots.Count; j++)

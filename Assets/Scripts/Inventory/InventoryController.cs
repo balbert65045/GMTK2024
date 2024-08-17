@@ -7,9 +7,9 @@ public class InventoryController: MonoBehaviour
     public static InventoryController Instance { get; private set; }
 
     public UnityEvent ItemChangedEvent;
+    public UnityEvent<BlockType> SelectedBlockTypeChangedEvent;
     public List<InventoryItem> InventoryItems { get; private set; }
-
-    [SerializeField] BlockSO[] defaultBlocks;
+    public BlockSO[] DefaultBlocks;
 
     void Awake()
     {
@@ -24,23 +24,26 @@ public class InventoryController: MonoBehaviour
         }
     }
 
-    void OnDestroy()
-    {
-        ItemChangedEvent.RemoveAllListeners();
-    }
-
     void Start()
     {
         InventoryItems = new List<InventoryItem>();
+        if (ItemChangedEvent == null) ItemChangedEvent = new UnityEvent();
+        if (SelectedBlockTypeChangedEvent == null) SelectedBlockTypeChangedEvent = new UnityEvent<BlockType>();
 
         Initialize();
     }
 
+    void OnDestroy()
+    {
+        ItemChangedEvent.RemoveAllListeners();
+        SelectedBlockTypeChangedEvent.RemoveAllListeners();
+    }
+
     void Initialize()
     {
-        if (defaultBlocks.Length > 0)
+        if (DefaultBlocks.Length > 0)
         {
-            foreach (BlockSO blockSO in defaultBlocks)
+            foreach (BlockSO blockSO in DefaultBlocks)
             {
                 AddItem(blockSO);
             }

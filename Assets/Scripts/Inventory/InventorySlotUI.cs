@@ -35,6 +35,7 @@ public class InventorySlotUI : MonoBehaviour
 
     public void OnSlotButton()
     {
-        inventoryItem.BlockData.SelectBlock();
+        Debug.Log("Button Clicked: " + inventoryItem.BlockData.Type.ToString());
+        InventoryController.Instance.SelectedBlockTypeChangedEvent?.Invoke(inventoryItem.BlockData.Type);
     }
 }
