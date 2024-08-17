@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum BlockType {
-    SQAURE,
+    SQUARE,
     VERTICAL_THREE,
     HORIZONTAL_THREE,
     CROSS,
@@ -14,7 +14,8 @@ public enum BlockType {
 public class Block : MonoBehaviour
 {
     [SerializeField] private bool _isSelected = true;
-    public BlockType _blockType;
+    public BlockType blockType;
+    /*
     private bool _tileUp = false;
     private bool _tileDown = false;
     private bool _tileLeft = false;
@@ -23,44 +24,42 @@ public class Block : MonoBehaviour
     private bool _tileUpRight = false;
     private bool _tileDownLeft = false;
     private bool _tileDownRight = false;
+    */
+
+    private List<Vector2> _neighbors = new List<Vector2>();
 
     private bool _isDragging = false;
+    private bool _isColliding = false;
     private GameObject[] _gridTiles;
 
     void Start()
     {
 
-        switch(_blockType)
+        switch(blockType)
         {
-            case BlockType.SQAURE:
-                _tileUp = false;
-                _tileDown = false;
-                _tileLeft = false;
-                _tileRight = false;
-                break;
             case BlockType.VERTICAL_THREE:
-                _tileUp = true;
-                _tileDown = true;
+                _neighbors.Add(new Vector2(0, 1));
+                _neighbors.Add(new Vector2(0, -1));
                 break;
             case BlockType.HORIZONTAL_THREE:
-                _tileLeft = true;
-                _tileRight = true;
+                _neighbors.Add(new Vector2(1, 0));
+                _neighbors.Add(new Vector2(-1, 0));
                 break;
             case BlockType.CROSS:
-                _tileUp = true;
-                _tileDown = true;
-                _tileLeft = true;
-                _tileRight = true;
+                _neighbors.Add(new Vector2(0, 1));
+                _neighbors.Add(new Vector2(0, -1));
+                _neighbors.Add(new Vector2(1, 0));
+                _neighbors.Add(new Vector2(-1, 0));
                 break;
             case BlockType.L_SHAPE_LEFT:
-                _tileUp = true;
-                _tileDown = true;
-                _tileDownLeft = true;
+                _neighbors.Add(new Vector2(0, 1));
+                _neighbors.Add(new Vector2(0, -1));
+                _neighbors.Add(new Vector2(-1, -1));
                 break;
             case BlockType.L_SHAPE_RIGHT:
-                _tileUp = true;
-                _tileDown = true;
-                _tileDownRight = true;
+                _neighbors.Add(new Vector2(0, 1));
+                _neighbors.Add(new Vector2(0, -1));
+                _neighbors.Add(new Vector2(1, -1));
                 break;
         }
 
@@ -99,13 +98,21 @@ public class Block : MonoBehaviour
             {
                 // set the selected tile to the grid tile
                 transform.position = gridTile.transform.position;
+                /*
+                    currentPosition = gridTile.transform.position;
+                */
             }
         }       
     }
 
+    void CheckIfColliding()
+    {
+        
+    }
+
     IEnumerator InitGridTiles()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         _gridTiles = GameObject.FindGameObjectsWithTag("GridTile");
     }
 
@@ -118,7 +125,7 @@ public class Block : MonoBehaviour
     {
         _isSelected = isSelected;
     }
-
+    /*
     public Dictionary<string, bool> GetTiles()
     {
         Dictionary<string, bool>  tiles = new Dictionary<string, bool>
@@ -134,6 +141,7 @@ public class Block : MonoBehaviour
         };
         return tiles;
     }
+    */
 
     public void SelectBlock()
     {
@@ -150,5 +158,10 @@ public class Block : MonoBehaviour
             GridTile gridScript = gridTile.GetComponent<GridTile>();
             gridScript.FindSelectedBlock();
         }
+    }
+
+    public List<Vector2> GetNeighbors()
+    {
+        return _neighbors;
     }
 }

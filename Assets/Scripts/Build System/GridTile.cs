@@ -19,7 +19,9 @@ public class GridTile : MonoBehaviour
     private GridTile _bottomLeftTile;
     private GridTile _bottomRightTile;
     private Block _currentlySelectedBlock;
-    private Dictionary<string, bool> _neighboringTiles;
+    private int _x;
+    private int _y;
+    //private Dictionary<string, bool> _neighboringTiles;
 
     void Start()
     {
@@ -35,7 +37,6 @@ public class GridTile : MonoBehaviour
             _renderer.material.shader = Shader.Find("Transparent/Diffuse");
             _renderer.material.color = _defaultColor;
         }
-        FindNeighboringTiles();
     }
 
     public void FindSelectedBlock()
@@ -47,7 +48,6 @@ public class GridTile : MonoBehaviour
             if (blockScript.IsSelected())
             {
                 _currentlySelectedBlock = blockScript;
-                _neighboringTiles = _currentlySelectedBlock.GetTiles();
             }
         }
 
@@ -57,217 +57,55 @@ public class GridTile : MonoBehaviour
     void HighlightTiles()
     {
         _canPlace = true;
-        if (_neighboringTiles != null)
+        GridVisualizer gridVisualizer = GetComponentInParent<GridVisualizer>();
+        GridTile[,] grid = gridVisualizer.GetGrid();
+        List<Vector2> blockNeighbors = _currentlySelectedBlock.GetNeighbors();
+        foreach (Vector2 neighbor in blockNeighbors)
         {
-            foreach (KeyValuePair<string, bool> tile in _neighboringTiles)
+            int x = _x + (int)neighbor.x;
+            int y = _y + (int)neighbor.y;
+            if (x < 0 || x >= gridVisualizer.GetWidth() || y < 0 || y >= gridVisualizer.GetHeight())
             {
-                switch (tile.Key)
-                {
-                    case "Up":
-                    if (_topTile && tile.Value)
-                    {
-                        Renderer topTileRenderer = _topTile.GetComponent<Renderer>();
-                        if (topTileRenderer != null)
-                        {
-                            topTileRenderer.material.color = _highlightColor;
-                        }
-                    }
-                    else if (!_topTile && tile.Value)
-                    {
-                        _canPlace = false;
-                    }
-                    break;
-                case "Down":
-                    if (_bottomTile && tile.Value)
-                    {
-                        Renderer bottomTileRenderer = _bottomTile.GetComponent<Renderer>();
-                        if (bottomTileRenderer != null)
-                        {
-                            bottomTileRenderer.material.color = _highlightColor;
-                        }
-                    } 
-                    else if (!_bottomTile && tile.Value)
-                    {
-                        _canPlace = false;
-                    }
-                    break;
-                case "Left":
-                    if (_leftTile && tile.Value)
-                    {
-                        Renderer leftTileRenderer = _leftTile.GetComponent<Renderer>();
-                        if (leftTileRenderer != null)
-                        {
-                            leftTileRenderer.material.color = _highlightColor;
-                        }
-                    } 
-                    else if (!_leftTile && tile.Value)
-                    {
-                        _canPlace = false;
-                    }
-                    break;
-                case "Right":
-                    if (_rightTile && tile.Value)
-                    {
-                        Renderer rightTileRenderer = _rightTile.GetComponent<Renderer>();
-                        if (rightTileRenderer != null)
-                        {
-                            rightTileRenderer.material.color = _highlightColor;
-                        }
-                    } 
-                    else if (!_rightTile && tile.Value)
-                    {
-                        _canPlace = false;
-                    }
-                    break;
-                case "UpLeft":
-                    if (_topLeftTile && tile.Value)
-                    {
-                        Renderer topLeftTileRenderer = _topLeftTile.GetComponent<Renderer>();
-                        if (topLeftTileRenderer != null)
-                        {
-                            topLeftTileRenderer.material.color = _highlightColor;
-                        }
-                    } 
-                    else if (!_topLeftTile && tile.Value)
-                    {
-                        _canPlace = false;
-                    }
-                    break;
-                case "UpRight":
-                    if (_topRightTile && tile.Value)
-                    {
-                        Renderer topRightTileRenderer = _topRightTile.GetComponent<Renderer>();
-                        if (topRightTileRenderer != null)
-                        {
-                            topRightTileRenderer.material.color = _highlightColor;
-                        }
-                    } 
-                    else if (!_topRightTile && tile.Value)
-                    {
-                        _canPlace = false;
-                    }
-                    break;
-                case "DownLeft":
-                    if (_bottomLeftTile && tile.Value)
-                    {
-                        Renderer bottomLeftTileRenderer = _bottomLeftTile.GetComponent<Renderer>();
-                        if (bottomLeftTileRenderer != null)
-                        {
-                            bottomLeftTileRenderer.material.color = _highlightColor;
-                        }
-                    } 
-                    else if (!_bottomLeftTile && tile.Value)
-                    {
-                        _canPlace = false;
-                    }
-                    break;
-                case "DownRight":
-                    if (_bottomRightTile && tile.Value)
-                    {
-                        Renderer bottomRightTileRenderer = _bottomRightTile.GetComponent<Renderer>();
-                        if (bottomRightTileRenderer != null)
-                        {
-                            bottomRightTileRenderer.material.color = _highlightColor;
-                        }
-                    } 
-                    else if (!_bottomRightTile && tile.Value)
-                    {
-                        _canPlace = false;
-                    }
-                    break;
-                }
+                _canPlace = false;
+                return;
             }
+            else if (x >= 0 && x < gridVisualizer.GetWidth() && y >= 0 && y < gridVisualizer.GetHeight())
+            {
+                GridTile tile = grid[x, y];
+                if (tile != null)
+                {
+                    Renderer tileRenderer = tile.GetComponent<Renderer>();
+                    if (tileRenderer != null)
+                    {
+                        tileRenderer.material.color = _highlightColor;
+                    }
+                }
+
+                
+            }
+            
         }
     }
 
     void UnhighlightTiles()
     {
-        if (_neighboringTiles != null)
+        GridVisualizer gridVisualizer = GetComponentInParent<GridVisualizer>();
+        GridTile[,] grid = gridVisualizer.GetGrid();
+        List<Vector2> blockNeighbors = _currentlySelectedBlock.GetNeighbors();
+        foreach (Vector2 neighbor in blockNeighbors)
         {
-            foreach (KeyValuePair<string, bool> tile in _neighboringTiles)
+            int x = _x + (int)neighbor.x;
+            int y = _y + (int)neighbor.y;
+            if (x >= 0 && x < gridVisualizer.GetWidth() && y >= 0 && y < gridVisualizer.GetHeight())
             {
-                switch (tile.Key)
+                GridTile tile = grid[x, y];
+                if (tile != null)
                 {
-                    case "Up":
-                    if (_topTile && tile.Value)
+                    Renderer tileRenderer = tile.GetComponent<Renderer>();
+                    if (tileRenderer != null)
                     {
-                        Renderer topTileRenderer = _topTile.GetComponent<Renderer>();
-                        if (topTileRenderer != null)
-                        {
-                            topTileRenderer.material.color = _defaultColor;
-                        }
+                        tileRenderer.material.color = _defaultColor;
                     }
-                    break;
-                case "Down":
-                    if (_bottomTile && tile.Value)
-                    {
-                        Renderer bottomTileRenderer = _bottomTile.GetComponent<Renderer>();
-                        if (bottomTileRenderer != null)
-                        {
-                            bottomTileRenderer.material.color = _defaultColor;
-                        }
-                    }
-                    break;
-                case "Left":
-                    if (_leftTile && tile.Value)
-                    {
-                        Renderer leftTileRenderer = _leftTile.GetComponent<Renderer>();
-                        if (leftTileRenderer != null)
-                        {
-                            leftTileRenderer.material.color = _defaultColor;
-                        }
-                    }
-                    break;
-                case "Right":
-                    if (_rightTile && tile.Value)
-                    {
-                        Renderer rightTileRenderer = _rightTile.GetComponent<Renderer>();
-                        if (rightTileRenderer != null)
-                        {
-                            rightTileRenderer.material.color = _defaultColor;
-                        }
-                    }
-                    break;
-                case "UpLeft":
-                    if (_topLeftTile && tile.Value)
-                    {
-                        Renderer topLeftTileRenderer = _topLeftTile.GetComponent<Renderer>();
-                        if (topLeftTileRenderer != null)
-                        {
-                            topLeftTileRenderer.material.color = _defaultColor;
-                        }
-                    }
-                    break;
-                case "UpRight":
-                    if (_topRightTile && tile.Value)
-                    {
-                        Renderer topRightTileRenderer = _topRightTile.GetComponent<Renderer>();
-                        if (topRightTileRenderer != null)
-                        {
-                            topRightTileRenderer.material.color = _defaultColor;
-                        }
-                    }
-                    break;
-                case "DownLeft":
-                    if (_bottomLeftTile && tile.Value)
-                    {
-                        Renderer bottomLeftTileRenderer = _bottomLeftTile.GetComponent<Renderer>();
-                        if (bottomLeftTileRenderer != null)
-                        {
-                            bottomLeftTileRenderer.material.color = _defaultColor;
-                        }
-                    }
-                    break;
-                case "DownRight":
-                    if (_bottomRightTile && tile.Value)
-                    {
-                        Renderer bottomRightTileRenderer = _bottomRightTile.GetComponent<Renderer>();
-                        if (bottomRightTileRenderer != null)
-                        {
-                            bottomRightTileRenderer.material.color = _defaultColor;
-                        }
-                    }
-                    break;
                 }
             }
         }
@@ -303,17 +141,15 @@ public class GridTile : MonoBehaviour
     {
         RaycastHit hit;
         Physics.Raycast(transform.position, direction, out hit, 1.0f);
-        //Debug.DrawRay(transform.position, direction, Color.red, 100.0f);
+        Debug.DrawRay(transform.position, direction, Color.red, 100.0f);
         if (hit.collider != null)
         {
-            Debug.Log(hit.collider.gameObject.name);
             return hit.collider.gameObject.GetComponent<GridTile>();
         }
         else
         {
-            Debug.Log("No tile found");
+            return null;
         }
-        return null;
     }
 
 
@@ -325,5 +161,11 @@ public class GridTile : MonoBehaviour
     public bool CanPlace()
     {
         return _canPlace;
+    }
+
+    public void SetGridPosition(int x, int y)
+    {
+        _x = x;
+        _y = y;
     }
 }
