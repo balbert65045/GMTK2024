@@ -24,8 +24,6 @@ public class WebProjectile : MonoBehaviour
         GetComponent<Rigidbody2D>().gravityScale = 0;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         StartCoroutine("DestroyAfterDelay");
-        //Destroy(this.gameObject);
-        //if (webEnd != null) { Destroy(webEnd.gameObject); }
     }
 
     IEnumerator DestroyAfterDelay()
@@ -65,6 +63,24 @@ public class WebProjectile : MonoBehaviour
         {
             lineRenderer.SetPosition(0, transform.position);
             lineRenderer.SetPosition(1, webEnd.transform.position);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (attachedToSpider)
+        {
+            Vector2 diff = transform.position - webShooter.transform.position;
+            float distance = diff.magnitude;
+            Vector2 dir = Vector3.Normalize(transform.position - webShooter.transform.position);
+            RaycastHit2D hit = Physics2D.Raycast(webShooter.transform.position, dir, distance, LayerMask.GetMask("Platform"));
+            if (hit.collider != null)
+            {
+                webShooter.ConnectWeb(hit.point);
+                if (webEnd != null) { Destroy(webEnd.gameObject); }
+                Destroy(this.gameObject);
+                return;
+            }
         }
     }
 }

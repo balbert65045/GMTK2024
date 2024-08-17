@@ -18,6 +18,13 @@ public class InputHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && playerMovement.GetComponent<PlayerStateManager>().currentGodPointTouching != null) {
+            Move(Vector2.zero);
+            GameManager.Instance.ToggleGameMode();
+            playerMovement.GetComponent<PlayerStateManager>().currentGodPointTouching.SwitchCam(GameManager.Instance.Mode);
+        }
+
+        if (GameManager.Instance.Mode != GameMode.PLATFORM_MODE) { return; }
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
         if (Input.GetKeyDown(KeyCode.Space))
