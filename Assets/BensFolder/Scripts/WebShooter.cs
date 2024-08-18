@@ -21,8 +21,11 @@ public class WebShooter : MonoBehaviour
     [SerializeField] float LaunchAddY = 1.5f;
     [SerializeField] float LaunchAddX = 1.5f;
 
+
     private Vector2 _swingInput;
 
+    [SerializeField] float RetractSpeed = 1f;
+    Fly flyRetracting;
 
     public void Swing(Vector2 moveInput)
     {
@@ -31,23 +34,35 @@ public class WebShooter : MonoBehaviour
     //
     void DoSwing()
     {
-        if (GetComponent<Rigidbody2D>().velocity.x < 0 && _swingInput.x < 0)
+        if (transform.position.y < ropeAnchor.y - (ropeJoint.distance / 1.5))
         {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Clamp(GetComponent<Rigidbody2D>().velocity.x - (swingSpeed * Time.deltaTime), -1 * MaxSwingVel, MaxSwingVel), GetComponent<Rigidbody2D>().velocity.y);
-        }
-        else if (GetComponent<Rigidbody2D>().velocity.x > 0 && _swingInput.x > 0)
-        {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Clamp(GetComponent<Rigidbody2D>().velocity.x + (swingSpeed * Time.deltaTime), - 1 * MaxSwingVel, MaxSwingVel), GetComponent<Rigidbody2D>().velocity.y);
+            if (GetComponent<Rigidbody2D>().velocity.x < 0 && _swingInput.x < 0)
+            {
+                GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Clamp(GetComponent<Rigidbody2D>().velocity.x - (swingSpeed * Time.deltaTime), -1 * MaxSwingVel, MaxSwingVel), GetComponent<Rigidbody2D>().velocity.y);
+            }
+            else if (GetComponent<Rigidbody2D>().velocity.x > 0 && _swingInput.x > 0)
+            {
+                GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Clamp(GetComponent<Rigidbody2D>().velocity.x + (swingSpeed * Time.deltaTime), -1 * MaxSwingVel, MaxSwingVel), GetComponent<Rigidbody2D>().velocity.y);
+            }
         }
     }
     public void ReleaseWeb()
     {
+        if (flyRetracting) { return; }
         ResetRope();
+    }
+
+    public void RetractFly(Fly fly)
+    {
+        flyRetracting = fly;
+        ropeRenderer.enabled = true;
+
+        //ropeRenderer
     }
 
     public void FireWeb()
     {
-        WebResourceController.Instance.DecrementWebCount(1);
+        if (flyRetracting) { return; }
         currentProjectile = Instantiate(WebProjectilePrefab, transform.position + .1f * Vector3.up, Quaternion.identity);
         currentProjectile.GetComponent<Rigidbody2D>().velocity = WebDir * webShotSpeed;
     }
@@ -62,18 +77,38 @@ public class WebShooter : MonoBehaviour
     void Update()
     {
         Vector3 WorldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        WebDir =  Vector3.Normalize(WorldMousePos - transform.position);
+        WebDir =  ((Vector2)WorldMousePos - (Vector2)transform.position).normalized;
         ropeRenderer.SetPosition(0, transform.position);
-        if (currentProjectile != null)
+        if (flyRetracting != null)
+        {
+            ropeRenderer.SetPosition(1, flyRetracting.transform.position);
+        }
+        else if (currentProjectile != null)
         {
             ropeRenderer.SetPosition(1, ropeAnchor);
         }
+
     }
 
     bool locked = false;
     //
     private void FixedUpdate()
     {
+        if (flyRetracting != null)
+        {
+            Vector3 dir = (transform.position - flyRetracting.transform.position).normalized;
+            flyRetracting.transform.position = flyRetracting.transform.position + (dir * RetractSpeed * Time.fixedDeltaTime);
+            if ((transform.position - flyRetracting.transform.position).magnitude < .4f)
+            {
+                Debug.Log("Destorying fly");
+                //EatFly and give points to build with
+                WebResourceController.Instance.IncrementWebCount(flyRetracting.GetWebAmount());
+                ropeRenderer.enabled = false;
+                Destroy(flyRetracting.gameObject);
+                flyRetracting = null;
+            }
+        }
+
         if (ropeJoint.enabled)
         {
             DoSwing();

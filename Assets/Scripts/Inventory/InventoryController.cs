@@ -29,7 +29,6 @@ public class InventoryController: MonoBehaviour
         InventoryItems = new List<InventoryItem>();
         if (ItemChangedEvent == null) ItemChangedEvent = new UnityEvent();
         if (SelectedBlockTypeChangedEvent == null) SelectedBlockTypeChangedEvent = new UnityEvent<BlockType>();
-
         Initialize();
     }
 

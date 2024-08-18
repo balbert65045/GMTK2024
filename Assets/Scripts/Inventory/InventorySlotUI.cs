@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using TMPro;
 
 public class InventorySlotUI : MonoBehaviour
 {
+    public TMP_Text CostText;
     public GameObject Icon;
     public Button SlotButton;
     public InventoryItem inventoryItem { get; private set; }
@@ -24,6 +26,12 @@ public class InventorySlotUI : MonoBehaviour
             Debug.LogWarning("Couldn't Set Inventory Slot");
             SlotButton.interactable = false;
         }
+        setCost(inventoryItem.BlockData.Cost);
+    }
+
+    private void setCost(int cost)
+    {
+        CostText.text = cost.ToString();
     }
 
     private bool setImage()

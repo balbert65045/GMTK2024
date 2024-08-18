@@ -11,7 +11,21 @@ public class WebProjectile : MonoBehaviour
     WebShooter webShooter;
     public bool attachedToSpider = true;
     GameObject webEnd;
-    
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<Fly>())
+        {
+            Debug.Log("Hit Fly");
+            if (attachedToSpider)
+            {
+                webShooter.RetractFly(collision.transform.GetComponent<Fly>());
+                Destroy(this.gameObject);
+                return;
+            }
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (attachedToSpider)
@@ -43,7 +57,7 @@ public class WebProjectile : MonoBehaviour
     {
         attachedToSpider = false;
         webEnd = Instantiate(WebEnd, webShooter.transform.position, Quaternion.identity);
-        Vector2 dir = Vector3.Normalize(transform.position - webShooter.transform.position);
+        Vector2 dir = ((Vector2)transform.position - (Vector2)webShooter.transform.position).normalized;
         webEnd.GetComponent<Rigidbody2D>().velocity = dir * GetComponent<Rigidbody2D>().velocity.magnitude;
     }
 

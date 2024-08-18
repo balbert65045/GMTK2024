@@ -8,6 +8,8 @@ public class InputHandler : MonoBehaviour
     PlayerMovement playerMovement;
     WebShooter webShooter;
     [SerializeField] GridVisualizer gridVisualizer;
+    [SerializeField] InventoryController inventoryController;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -24,13 +26,13 @@ public class InputHandler : MonoBehaviour
             GameManager.Instance.ToggleGameMode();
             if (GameManager.Instance.Mode == GameMode.BUILD_MODE)
             {
-                gridVisualizer.gameObject.SetActive(true);
-                gridVisualizer.ShowGrid();
+                FindObjectOfType<PlayerStateManager>().currentGridOn.gameObject.SetActive(true);
+                inventoryController.gameObject.SetActive(true);
             }
             else
             {
-                gridVisualizer.HideGrid();
-                gridVisualizer.gameObject.SetActive(false);
+                FindObjectOfType<PlayerStateManager>().currentGridOn.gameObject.SetActive(false);
+                inventoryController.gameObject.SetActive(false);
 
             }
             playerMovement.GetComponent<PlayerStateManager>().currentGodPointTouching.SwitchCam(GameManager.Instance.Mode);

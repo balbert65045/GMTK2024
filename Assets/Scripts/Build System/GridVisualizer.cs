@@ -13,7 +13,7 @@ public class GridVisualizer : MonoBehaviour
     {
         _grid = new GridTile[_gridWidth, _gridHeight];
         CreateGrid();
-        HideGrid();
+        //HideGrid();
     }
 
     public void HideGrid()
@@ -49,7 +49,7 @@ public class GridVisualizer : MonoBehaviour
 
                 GameObject gridTile= GameObject.CreatePrimitive(PrimitiveType.Cube);
                 gridTile.transform.parent = transform;
-                gridTile.transform.position = new Vector3(startX + x * _tileSize, startY + y * _tileSize, 0);
+                gridTile.transform.localPosition = new Vector3(startX + x * _tileSize, startY + y * _tileSize, 0);
 
                 // attach script to grid tile
                 _grid[x, y] = gridTile.AddComponent<GridTile>();
