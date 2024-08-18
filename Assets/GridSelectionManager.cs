@@ -1,19 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GridSelectionManager : MonoBehaviour
 {
-    public GridTile tileOver = null;
-    public Block prefabBlockPlacing = null;
+    private GridTile _tileOver = null;
+    private Block _currentPrefab = null;
 
     Block blockMoving;
 
-    public void SetCurrentPlacingBlock(GameObject BlockPrefab)
-    {
-        prefabBlockPlacing = BlockPrefab.GetComponent<Block>();
-        if (tileOver) { tileOver.HighlightTiles(); }
-    }
+    
     // Update is called once per frame
     void Update()
     {
@@ -21,19 +16,19 @@ public class GridSelectionManager : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (prefabBlockPlacing == null) { return; }
-                if(tileOver == null) { return; } 
+                if (_currentPrefab == null) return;
+                if(_tileOver == null) return; 
                 
-                if (tileOver.GetBlockHolding() != null)
+                if (_tileOver.GetBlockHolding() != null)
                 {
-                    blockMoving = tileOver.GetBlockHolding();
+                    blockMoving = _tileOver.GetBlockHolding();
                 }
                 else {
+                    bool canPlace = _tileOver.GetCanPlace();
+                    if (!canPlace) return;
                     //NEED to check neighbors as well here!
-
-
-                    GameObject block = Instantiate(prefabBlockPlacing.gameObject);
-                    block.transform.position = tileOver.transform.position;
+                    GameObject block = Instantiate(_currentPrefab.gameObject);
+                    block.transform.position = _tileOver.transform.position;
                     SetBlockOnTile(block.GetComponent<Block>());
                 }
 
@@ -44,14 +39,37 @@ public class GridSelectionManager : MonoBehaviour
             }
         }
     }
+    
 
     public void SetBlockOnTile(Block block)
     {
-        tileOver.SetBlockHolding(block.GetComponent<Block>());
-        List<GridTile> tileNeighbors = tileOver.GetTileNeighbors(prefabBlockPlacing.GetNeighbors());
+        _tileOver.SetBlockHolding(block.GetComponent<Block>());
+        List<GridTile> tileNeighbors = _tileOver.GetTileNeighbors(_currentPrefab.GetNeighbors());
         foreach (GridTile tile in tileNeighbors)
         {
             tile.SetBlockHolding(block.GetComponent<Block>());
         }
     }
+
+    public void SetCurrentPlacingBlock(GameObject BlockPrefab)
+    {
+        _currentPrefab = BlockPrefab.GetComponent<Block>();
+        if (_tileOver) _tileOver.HighlightTiles(); 
+    }
+
+    public void SetTileOver(GridTile tile)
+    {
+        _tileOver = tile;
+    }
+
+    public GridTile GetTileOver()
+    {
+        return _tileOver;
+    }
+
+    public Block GetCurrentPrefab()
+    {
+        return _currentPrefab;
+    }
+
 }

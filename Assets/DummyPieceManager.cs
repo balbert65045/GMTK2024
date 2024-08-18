@@ -7,6 +7,7 @@ public class DummyPieceManager : MonoBehaviour
     [SerializeField] GameObject Block1Prefab;
     [SerializeField] GameObject Block2Prefab;
     [SerializeField] GameObject Block3Prefab;
+    [SerializeField] GameObject Block4Prefab;
 
     // Start is called before the first frame update
     void Start()
@@ -21,19 +22,37 @@ public class DummyPieceManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
+                ClearHighlights();
                 FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block1Prefab);
                 //GetComponent<BlockManager>()
             }
             if(Input.GetKeyDown(KeyCode.Alpha2))
             {
+                ClearHighlights();
                 FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block2Prefab);
                 //GetComponent<BlockManager>()
             }
             if(Input.GetKeyDown(KeyCode.Alpha3))
-            {
+            {   
+                ClearHighlights();
                 FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block3Prefab);
                 //GetComponent<BlockManager>()
             }
+            if(Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                ClearHighlights();
+                FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block4Prefab);
+                //GetComponent<BlockManager>()
+            }
+        }
+    }
+
+    void ClearHighlights()
+    {
+        GameObject[] tiles = GameObject.FindGameObjectsWithTag("GridTile");
+        foreach (GameObject tile in tiles)
+        {
+            tile.GetComponent<GridTile>().SetColor(new Color(0, 0, 1, 0.5f));
         }
     }
 }

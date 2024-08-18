@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 8894557183537235702}
   - component: {fileID: 9025763853835403793}
   - component: {fileID: 793963660321545054}
+  - component: {fileID: 8408652855473105133}
   m_Layer: 6
   m_Name: CrossPiece
-  m_TagString: Untagged
+  m_TagString: Block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,6 +132,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8408652855473105133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5352276195043852526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf6c7c711ac13c6aac0ca6b61f910b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _blockType: 3
 --- !u!1 &6924556780398811820
 GameObject:
   m_ObjectHideFlags: 0
