@@ -21,8 +21,9 @@ public class WebShooter : MonoBehaviour
     [SerializeField] float LaunchAddY = 1.5f;
     [SerializeField] float LaunchAddX = 1.5f;
 
-    private Vector2 _swingInput;
 
+    private Vector2 _swingInput;
+    
 
     public void Swing(Vector2 moveInput)
     {
@@ -31,13 +32,16 @@ public class WebShooter : MonoBehaviour
     //
     void DoSwing()
     {
-        if (GetComponent<Rigidbody2D>().velocity.x < 0 && _swingInput.x < 0)
+        if (transform.position.y < ropeAnchor.y - (ropeJoint.distance / 1.5))
         {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Clamp(GetComponent<Rigidbody2D>().velocity.x - (swingSpeed * Time.deltaTime), -1 * MaxSwingVel, MaxSwingVel), GetComponent<Rigidbody2D>().velocity.y);
-        }
-        else if (GetComponent<Rigidbody2D>().velocity.x > 0 && _swingInput.x > 0)
-        {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Clamp(GetComponent<Rigidbody2D>().velocity.x + (swingSpeed * Time.deltaTime), - 1 * MaxSwingVel, MaxSwingVel), GetComponent<Rigidbody2D>().velocity.y);
+            if (GetComponent<Rigidbody2D>().velocity.x < 0 && _swingInput.x < 0)
+            {
+                GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Clamp(GetComponent<Rigidbody2D>().velocity.x - (swingSpeed * Time.deltaTime), -1 * MaxSwingVel, MaxSwingVel), GetComponent<Rigidbody2D>().velocity.y);
+            }
+            else if (GetComponent<Rigidbody2D>().velocity.x > 0 && _swingInput.x > 0)
+            {
+                GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Clamp(GetComponent<Rigidbody2D>().velocity.x + (swingSpeed * Time.deltaTime), -1 * MaxSwingVel, MaxSwingVel), GetComponent<Rigidbody2D>().velocity.y);
+            }
         }
     }
     public void ReleaseWeb()
@@ -62,7 +66,7 @@ public class WebShooter : MonoBehaviour
     void Update()
     {
         Vector3 WorldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        WebDir =  Vector3.Normalize(WorldMousePos - transform.position);
+        WebDir =  ((Vector2)WorldMousePos - (Vector2)transform.position).normalized;
         ropeRenderer.SetPosition(0, transform.position);
         if (currentProjectile != null)
         {

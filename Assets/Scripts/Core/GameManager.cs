@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     {
         if (GameModeChangedEvent == null) GameModeChangedEvent = new UnityEvent<GameMode>();
 
-        Mode = GameMode.BUILD_MODE;
+        Mode = GameMode.PLATFORM_MODE;
         GameModeChangedEvent?.Invoke(Mode);
     }
 

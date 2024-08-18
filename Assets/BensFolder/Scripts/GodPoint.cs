@@ -7,11 +7,13 @@ public class GodPoint : MonoBehaviour
     [SerializeField] Cinemachine.CinemachineVirtualCamera zoomOutCam;
     [SerializeField] Cinemachine.CinemachineVirtualCamera camUp;
     [SerializeField] Cinemachine.CinemachineVirtualCamera camDown;
+    [SerializeField] GridVisualizer grid;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.GetComponent<PlayerMovement>() != null)
         {
+            collision.transform.GetComponent<PlayerStateManager>().SetCurrentGridOn(grid);
             collision.transform.GetComponent<PlayerStateManager>().SetGodPoint(this);
             if (camDown == null) { return; }
             FindObjectOfType<Cinemachine.CinemachineBrain>().m_DefaultBlend.m_Time = 1f;

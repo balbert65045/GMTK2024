@@ -3,12 +3,36 @@ using UnityEngine;
 
 public class GridSelectionManager : MonoBehaviour
 {
-    private GridTile _tileOver = null;
-    private Block _currentPrefab = null;
-
+    public GridTile tileOver = null;
+    public Block prefabBlockPlacing = null;
+    int webCostForBlock = 0;
+    [SerializeField] InventoryController inventoryController;
     Block blockMoving;
 
-    
+    private void Start()
+    {
+        inventoryController.SelectedBlockTypeChangedEvent?.AddListener(SetCurrentPlacingBlock);
+    }
+
+    public void SetCurrentPlacingBlock(BlockType blockType)
+    {
+        BlockSO soUsing = null;
+        foreach(BlockSO so in InventoryController.Instance.DefaultBlocks)
+        {
+            if (so.Type == blockType) {
+                soUsing = so;
+                break;
+            }
+        }
+        if(soUsing.Prefab == null)
+        {
+            Debug.LogError("No prefab for the scriptable object or no matching type");
+            return;
+        }
+        prefabBlockPlacing = soUsing.Prefab.GetComponent<Block>();
+        webCostForBlock = soUsing.Cost;
+        if (tileOver) { tileOver.HighlightTiles(); }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -43,8 +67,9 @@ public class GridSelectionManager : MonoBehaviour
 
     public void SetBlockOnTile(Block block)
     {
-        _tileOver.SetBlockHolding(block.GetComponent<Block>());
-        List<GridTile> tileNeighbors = _tileOver.GetTileNeighbors(_currentPrefab.GetNeighbors());
+        WebResourceController.Instance.DecrementWebCount(webCostForBlock);
+        tileOver.SetBlockHolding(block.GetComponent<Block>());
+        List<GridTile> tileNeighbors = tileOver.GetTileNeighbors(prefabBlockPlacing.GetNeighbors());
         foreach (GridTile tile in tileNeighbors)
         {
             tile.SetBlockHolding(block.GetComponent<Block>());

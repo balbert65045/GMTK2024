@@ -43,7 +43,7 @@ public class WebProjectile : MonoBehaviour
     {
         attachedToSpider = false;
         webEnd = Instantiate(WebEnd, webShooter.transform.position, Quaternion.identity);
-        Vector2 dir = Vector3.Normalize(transform.position - webShooter.transform.position);
+        Vector2 dir = ((Vector2)transform.position - (Vector2)webShooter.transform.position).normalized;
         webEnd.GetComponent<Rigidbody2D>().velocity = dir * GetComponent<Rigidbody2D>().velocity.magnitude;
     }
 
