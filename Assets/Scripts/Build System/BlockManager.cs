@@ -11,22 +11,22 @@ public class BlockManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            _blocks[0].GetComponent<Block>().SelectBlock();
+           // _blocks[0].GetComponent<Block>().SelectBlock();
             Debug.Log("Block 1");
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            _blocks[1].GetComponent<Block>().SelectBlock();
+           // _blocks[1].GetComponent<Block>().SelectBlock();
             Debug.Log("Block 2");
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            _blocks[2].GetComponent<Block>().SelectBlock();
+           // _blocks[2].GetComponent<Block>().SelectBlock();
             Debug.Log("Block 3");
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            _blocks[3].GetComponent<Block>().SelectBlock();
+           // _blocks[3].GetComponent<Block>().SelectBlock();
             Debug.Log("Block 4");
         }
     }
