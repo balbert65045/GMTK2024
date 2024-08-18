@@ -13,7 +13,7 @@ public class GridVisualizer : MonoBehaviour
     {
         _grid = new GridTile[_gridWidth, _gridHeight];
         CreateGrid();
-        //HideGrid();
+        HideGrid();
     }
 
     public void HideGrid()

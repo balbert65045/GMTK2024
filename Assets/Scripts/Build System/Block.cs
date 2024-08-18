@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,14 +12,34 @@ public enum BlockType {
 
 public class Block : MonoBehaviour
 {
-    public BlockType blockType;
+    [SerializeField] private BlockType _blockType;
+    private List<Vector2> _gridPositions = new List<Vector2>();
 
+
+    void Start()
+    {
+        GridTile gridTile = FindAnyObjectByType<GridSelectionManager>().GetTileOver();
+        Stack<GridTile> selectedTiles = gridTile.GetCurrentHighlightedTiles();
+
+        if (_blockType == BlockType.SQUARE)
+        {
+            _gridPositions.Add(gridTile.GetGridPosition());
+        }
+        else
+        {
+            foreach (GridTile tile in selectedTiles)
+            {
+                _gridPositions.Add(tile.GetGridPosition());
+                Debug.Log(_gridPositions[_gridPositions.Count -1]);
+            }
+        }
+    }
 
     public List<Vector2> GetNeighbors()
     {
         List<Vector2> _neighbors = new List<Vector2>();
 
-        switch (blockType)
+        switch (_blockType)
         {
             case BlockType.VERTICAL_THREE:
                 _neighbors.Add(new Vector2(0, 1));
@@ -49,5 +68,12 @@ public class Block : MonoBehaviour
         }
 
         return _neighbors;
+    }
+
+    public BlockType GetBlockType() { return _blockType; }
+
+    public List<Vector2> GetGridPositions()
+    {
+        return _gridPositions;
     }
 }
