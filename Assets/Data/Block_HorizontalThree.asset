@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Block_HorizontalThree
   m_EditorClassIdentifier: 
   Type: 2
-  Cost: 10
+  Cost: 15
   Icon: {fileID: 21300000, guid: 84eee29eb231c294e82858048123681f, type: 3}
   Prefab: {fileID: 3989472033192085775, guid: 16d67ca6bfa4dd94abf78cd90d3eb117, type: 3}

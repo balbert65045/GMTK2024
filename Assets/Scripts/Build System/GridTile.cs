@@ -39,7 +39,7 @@ public class GridTile : MonoBehaviour
         GridTile[,] grid = gridVisualizer.GetGrid();
 
         //Bens AWESOME changes
-        if (_renderer != null) _renderer.material.color = _highlightColor;
+        if (_renderer != null) _renderer.material.color = GridSelectionManager.Instance.GetHighlightColor();
         Block selectedBlock = FindObjectOfType<GridSelectionManager>().GetCurrentPrefab();
         if (selectedBlock == null) return;
         List<Vector2> blockNeighbors = selectedBlock.GetNeighbors();
@@ -94,6 +94,7 @@ public class GridTile : MonoBehaviour
                     }
                 }
             }
+            
             int x = _x + (int)neighbor.x;
             int y = _y + (int)neighbor.y;
             if (x < 0 || x >= gridVisualizer.GetWidth() || y < 0 || y >= gridVisualizer.GetHeight())
@@ -115,7 +116,7 @@ public class GridTile : MonoBehaviour
                     Renderer tileRenderer = tile.GetComponent<Renderer>();
                     if (tileRenderer != null)
                     {
-                        tileRenderer.material.color = _highlightColor;
+                        tileRenderer.material.color = GridSelectionManager.Instance.GetHighlightColor();
                     }
                 }
                 _currentHighlightedTiles.Push(this);

@@ -11,7 +11,21 @@ public class WebProjectile : MonoBehaviour
     WebShooter webShooter;
     public bool attachedToSpider = true;
     GameObject webEnd;
-    
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<Fly>())
+        {
+            Debug.Log("Hit Fly");
+            if (attachedToSpider)
+            {
+                webShooter.RetractFly(collision.transform.GetComponent<Fly>());
+                Destroy(this.gameObject);
+                return;
+            }
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (attachedToSpider)

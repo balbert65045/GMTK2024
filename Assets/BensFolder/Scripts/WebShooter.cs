@@ -23,7 +23,9 @@ public class WebShooter : MonoBehaviour
 
 
     private Vector2 _swingInput;
-    
+
+    [SerializeField] float RetractSpeed = 1f;
+    Fly flyRetracting;
 
     public void Swing(Vector2 moveInput)
     {
@@ -46,12 +48,21 @@ public class WebShooter : MonoBehaviour
     }
     public void ReleaseWeb()
     {
+        if (flyRetracting) { return; }
         ResetRope();
+    }
+
+    public void RetractFly(Fly fly)
+    {
+        flyRetracting = fly;
+        ropeRenderer.enabled = true;
+
+        //ropeRenderer
     }
 
     public void FireWeb()
     {
-        WebResourceController.Instance.DecrementWebCount(1);
+        if (flyRetracting) { return; }
         currentProjectile = Instantiate(WebProjectilePrefab, transform.position + .1f * Vector3.up, Quaternion.identity);
         currentProjectile.GetComponent<Rigidbody2D>().velocity = WebDir * webShotSpeed;
     }
@@ -68,16 +79,36 @@ public class WebShooter : MonoBehaviour
         Vector3 WorldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         WebDir =  ((Vector2)WorldMousePos - (Vector2)transform.position).normalized;
         ropeRenderer.SetPosition(0, transform.position);
-        if (currentProjectile != null)
+        if (flyRetracting != null)
+        {
+            ropeRenderer.SetPosition(1, flyRetracting.transform.position);
+        }
+        else if (currentProjectile != null)
         {
             ropeRenderer.SetPosition(1, ropeAnchor);
         }
+
     }
 
     bool locked = false;
     //
     private void FixedUpdate()
     {
+        if (flyRetracting != null)
+        {
+            Vector3 dir = (transform.position - flyRetracting.transform.position).normalized;
+            flyRetracting.transform.position = flyRetracting.transform.position + (dir * RetractSpeed * Time.fixedDeltaTime);
+            if ((transform.position - flyRetracting.transform.position).magnitude < .4f)
+            {
+                Debug.Log("Destorying fly");
+                //EatFly and give points to build with
+                WebResourceController.Instance.IncrementWebCount(flyRetracting.GetWebAmount());
+                ropeRenderer.enabled = false;
+                Destroy(flyRetracting.gameObject);
+                flyRetracting = null;
+            }
+        }
+
         if (ropeJoint.enabled)
         {
             DoSwing();

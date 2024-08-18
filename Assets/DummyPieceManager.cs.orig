@@ -22,17 +22,40 @@ public class DummyPieceManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
+<<<<<<< HEAD
+                ClearHighlights();
+                FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block1Prefab);
+=======
                 //FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block1Prefab);
+>>>>>>> 6ee4f72 (Music is so god damn cool)
                 //GetComponent<BlockManager>()
             }
             if(Input.GetKeyDown(KeyCode.Alpha2))
             {
+<<<<<<< HEAD
+                ClearHighlights();
+                FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block2Prefab);
+                //GetComponent<BlockManager>()
+            }
+            if(Input.GetKeyDown(KeyCode.Alpha3))
+            {   
+                ClearHighlights();
+                FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block3Prefab);
+=======
                // FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block2Prefab);
                 //GetComponent<BlockManager>()
             }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
+            if(Input.GetKeyDown(KeyCode.Alpha3))
             {
-                // FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block3Prefab);
+               // FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block3Prefab);
+>>>>>>> 6ee4f72 (Music is so god damn cool)
+                //GetComponent<BlockManager>()
+            }
+            if(Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                ClearHighlights();
+                FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block4Prefab);
+                //GetComponent<BlockManager>()
             }
         }
     }

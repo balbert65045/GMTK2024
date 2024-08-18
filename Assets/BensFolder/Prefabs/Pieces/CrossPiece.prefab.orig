@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7794693378931573856}
   m_Layer: 6
   m_Name: CrossPiece
-  m_TagString: Block
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbf6c7c711ac13c6aac0ca6b61f910b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _blockType: 3
+  blockType: 3
 --- !u!1001 &4411760911509008567
 PrefabInstance:
   m_ObjectHideFlags: 0

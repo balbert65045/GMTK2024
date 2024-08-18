@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Block_Square
   m_EditorClassIdentifier: 
   Type: 0
-  Cost: 2
+  Cost: 10
   Icon: {fileID: 21300000, guid: 84f04ed86ac5da144ae9edf5223ef027, type: 3}
   Prefab: {fileID: 3989472033192085775, guid: f80b1c32ed4aefb42942efb14a3fc5fe, type: 3}

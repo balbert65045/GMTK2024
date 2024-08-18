@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Block_Cross
   m_EditorClassIdentifier: 
   Type: 3
-  Cost: 10
+  Cost: 25
   Icon: {fileID: 21300000, guid: ffeede941c0c2ad41a8106af45552003, type: 3}
   Prefab: {fileID: 8216592640340461363, guid: a0aa9b6da3350c04cb6bdaca7642b77c, type: 3}
