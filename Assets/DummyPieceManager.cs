@@ -5,6 +5,9 @@ using UnityEngine;
 public class DummyPieceManager : MonoBehaviour
 {
     [SerializeField] GameObject Block1Prefab;
+    [SerializeField] GameObject Block2Prefab;
+    [SerializeField] GameObject Block3Prefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,9 +21,17 @@ public class DummyPieceManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                GameObject block = Instantiate(Block1Prefab);
-                block.GetComponent<Block>().SelectBlock();
-                block.GetComponent<Block>().FindSelectedTile();
+                FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block1Prefab);
+                //GetComponent<BlockManager>()
+            }
+            if(Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block2Prefab);
+                //GetComponent<BlockManager>()
+            }
+            if(Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block3Prefab);
                 //GetComponent<BlockManager>()
             }
         }
