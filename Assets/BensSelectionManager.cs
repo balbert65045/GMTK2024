@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class GridSelectionManager : MonoBehaviour
+public class BensSelectionManager : MonoBehaviour
 {
     public GridTile _tileOver = null;
     public Block _prefabBlockPlacing = null;
@@ -22,7 +22,7 @@ public class GridSelectionManager : MonoBehaviour
         return _highlightColor;
     }
 
-    public static GridSelectionManager Instance;
+    public static BensSelectionManager Instance;
 
     private void Awake()
     {
