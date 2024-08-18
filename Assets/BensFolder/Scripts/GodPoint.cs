@@ -9,7 +9,7 @@ public class GodPoint : MonoBehaviour
     [SerializeField] Cinemachine.CinemachineVirtualCamera camDown;
     [SerializeField] GridVisualizer grid;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.GetComponent<PlayerMovement>() != null)
         {
@@ -25,10 +25,11 @@ public class GodPoint : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.transform.GetComponent<PlayerMovement>() != null)
         {
+            if (GameManager.Instance.Mode == GameMode.BUILD_MODE) { GameManager.Instance.ToggleGameMode(); }
             collision.transform.GetComponent<PlayerStateManager>().SetGodPoint(null);
         }
     }
