@@ -22,17 +22,17 @@ public class DummyPieceManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                //FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block1Prefab);
+                FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block1Prefab);
                 //GetComponent<BlockManager>()
             }
             if(Input.GetKeyDown(KeyCode.Alpha2))
             {
-               // FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block2Prefab);
+                FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block2Prefab);
                 //GetComponent<BlockManager>()
             }
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                // FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block3Prefab);
+               FindObjectOfType<GridSelectionManager>().SetCurrentPlacingBlock(Block3Prefab);
             }
         }
     }
