@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public enum BlockType {
     SQUARE,
@@ -14,12 +15,14 @@ public class Block : MonoBehaviour
 {
     [SerializeField] private BlockType _blockType;
     private List<Vector2> _gridPositions = new List<Vector2>();
+    private GridSelectionManager _gridSelectionManager;
 
 
     void Start()
     {
-        GridTile gridTile = FindAnyObjectByType<GridSelectionManager>().GetTileOver();
-        Stack<GridTile> selectedTiles = gridTile.GetCurrentHighlightedTiles();
+        _gridSelectionManager = FindObjectOfType<GridSelectionManager>();
+        GridTile gridTile = _gridSelectionManager.GetTileOver();
+        List<GridTile> selectedTiles = gridTile.GetCurrentHighlightedTiles();
 
         if (_blockType == BlockType.SQUARE)
         {
@@ -75,5 +78,20 @@ public class Block : MonoBehaviour
     public List<Vector2> GetGridPositions()
     {
         return _gridPositions;
+    }
+
+    public void AddGridPosition (Vector2 gridPosition)
+    {
+        _gridPositions.Add(gridPosition);
+    }
+
+    public void SetGridPositions(List<Vector2> gridPositions)
+    {
+        _gridPositions = gridPositions;
+    }
+
+    public void ClearGridPositions()
+    {
+        _gridPositions.Clear();
     }
 }

@@ -38,7 +38,16 @@ public class GridTile : MonoBehaviour
         _canPlace = true;
         _gridSelectionManager.SetBlockOver(null);
 
+<<<<<<< HEAD
+        GridVisualizer gridVisualizer = GetComponentInParent<GridVisualizer>();
+        GridTile[,] grid = gridVisualizer.GetGrid();
+
+        //Bens AWESOME changes
+        if (_renderer != null) _renderer.material.color = GridSelectionManager.Instance.GetHighlightColor();
+        Block selectedBlock = FindObjectOfType<GridSelectionManager>().GetCurrentPrefab();
+=======
         Block selectedBlock = _gridSelectionManager.GetCurrentPrefab();
+>>>>>>> 1c9a93a (move and delete modes!)
         if (selectedBlock == null) return;
 
         List<Vector2> blockNeighbors = selectedBlock.GetNeighbors();
@@ -81,6 +90,56 @@ public class GridTile : MonoBehaviour
         {
             if (IsSquareBlockOverlapping(blockComponents))
             {
+<<<<<<< HEAD
+                if (block == null) continue;
+                List<Vector2> gridPositions = block.GetGridPositions();
+                if (gridPositions == null) continue;
+                foreach (Vector2 gridPosition in gridPositions)
+                {
+                    if (gridPosition == null) continue;
+                    if (gridPosition == new Vector2(_x, _y))
+                    {
+                        _canPlace = false;
+                        _renderer.material.color = _cantPlaceColor;
+                        return;
+                    }
+                }
+            }
+        }
+
+        foreach (Vector2 neighbor in blockNeighbors)
+        {
+            foreach (Block block in blockComponents)
+            {
+                if (block == null) continue;
+                List<Vector2> gridPositions = block.GetGridPositions();
+                if (gridPositions == null) continue;
+                foreach (Vector2 gridPosition in gridPositions)
+                {
+                    if (gridPosition == null) continue;
+                    if (gridPosition == new Vector2(_x + neighbor.x, _y + neighbor.y) || gridPosition == new Vector2(_x, _y))
+                    {
+                        foreach (GridTile tile in previousNeighbors)
+                        {
+                            tile.GetComponent<Renderer>().material.color = _cantPlaceColor;
+                        }
+                        _canPlace = false;
+                        _renderer.material.color = _cantPlaceColor;
+                        return;
+                    }
+                }
+            }
+            
+            int x = _x + (int)neighbor.x;
+            int y = _y + (int)neighbor.y;
+            if (x < 0 || x >= gridVisualizer.GetWidth() || y < 0 || y >= gridVisualizer.GetHeight())
+            {
+                foreach(GridTile tile in previousNeighbors)
+                {
+                    tile.GetComponent<Renderer>().material.color = _cantPlaceColor;
+                }
+=======
+>>>>>>> 1c9a93a (move and delete modes!)
                 _canPlace = false;
                 _renderer.material.color = _cantPlaceColor;
                 return;
@@ -132,7 +191,15 @@ public class GridTile : MonoBehaviour
             {
                 if (gridPosition == new Vector2(_gridX, _gridY))
                 {
+<<<<<<< HEAD
+                    Renderer tileRenderer = tile.GetComponent<Renderer>();
+                    if (tileRenderer != null)
+                    {
+                        tileRenderer.material.color = GridSelectionManager.Instance.GetHighlightColor();
+                    }
+=======
                     return true;
+>>>>>>> 1c9a93a (move and delete modes!)
                 }
             }
         }
