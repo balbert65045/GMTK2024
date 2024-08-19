@@ -66,6 +66,7 @@ public class PlayerStateManager : MonoBehaviour
     {
         if (!isStunned)
         {
+            AudioManager.Instance.PlayFlyBump();
             AudioManager.Instance.PlaySqueek();
             isStunned = true;
             PlayerMovement pm = GetComponent<PlayerMovement>();

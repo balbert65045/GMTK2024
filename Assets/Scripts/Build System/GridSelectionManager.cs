@@ -164,6 +164,7 @@ public class GridSelectionManager : MonoBehaviour
                         tile.SetBlockHolding(null);
                         tile.SetCanPlace(true);
                     }
+                    AudioManager.Instance.DeleteBlock();
                     WebResourceController.Instance.IncrementWebCount(block.GetCost());
                     Destroy(block.gameObject);
                 }

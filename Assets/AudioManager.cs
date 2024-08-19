@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    [SerializeField] AudioSource flyBump;
+
     [SerializeField] AudioSource squeek;
     [SerializeField] AudioSource hiss;
     [SerializeField] AudioSource flyCatch;
@@ -28,6 +30,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource moveAlongGrid;
     [SerializeField] AudioSource select;
     [SerializeField] AudioSource tilePlace;
+    [SerializeField] AudioSource deleteTile;
+
 
 
 
@@ -55,6 +59,16 @@ public class AudioManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+    }
+
+    public void PlayFlyBump()
+    {
+        flyBump.Play();
+    }
+
+    public void DeleteBlock()
+    {
+        deleteTile.Play();
     }
 
     public void SwingWebLeft()
