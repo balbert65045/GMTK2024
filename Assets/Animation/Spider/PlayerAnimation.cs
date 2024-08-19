@@ -3,8 +3,13 @@ using UnityEngine;
 // NOTE: Ensure name of animation matches enum
 public enum PlayerAnimationState
 {
-    PLAYER_JUMP,
-    PLAYER_IDLE
+    PLAYER_IDLE,
+    PLAYER_MOVE,
+    PLAYER_STANDARD_JUMP,
+    PLAYER_CONNECTED_JUMP,
+    PLAYER_SHOOT,
+    PLAYER_STUN,
+    PLAYER_REFILL
 }
 
 // Example: Call ChangeAnimationState(PlayerAnimationState.PLAYER_JUMP); from PlayerMovement...
