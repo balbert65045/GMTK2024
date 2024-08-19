@@ -50,6 +50,7 @@ public class PauseMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.Won) { return; }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (!GameManager.Instance.Paused)

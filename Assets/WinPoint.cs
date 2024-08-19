@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class WinPoint : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] Cinemachine.CinemachineVirtualCamera winCam;
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.GetComponent<PlayerMovement>() != null)
+        {
+            Win(collision.GetComponent<PlayerMovement>());
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Win(PlayerMovement pm)
     {
-        
+        GameManager.Instance.SetWon(true);
+        pm._moveInput = Vector2.zero;
+        pm.RB.velocity = Vector2.zero;
+        winCam.Priority = 3;
+        StartCoroutine("ShowWin");
+    }
+
+    IEnumerator ShowWin()
+    {
+        yield return new WaitForSeconds(1.2f);
+        FindObjectOfType<WinScreenManager>().ShowWinScreen();
     }
 }

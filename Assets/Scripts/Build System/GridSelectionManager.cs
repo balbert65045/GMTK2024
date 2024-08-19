@@ -88,6 +88,7 @@ public class GridSelectionManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.Won) { return; }
         if (GameManager.Instance.Paused) { return; }
 
         if (GameManager.Instance.Mode == GameMode.BUILD_MODE)

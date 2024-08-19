@@ -213,6 +213,11 @@ public class AudioManager : MonoBehaviour
 
     private void Update()
     {
+        if (Level2GodSpot == null)
+        {
+            if (!Level1Audio.isPlaying) { Level1Audio.Play(); }
+            return;
+        }
         if (!Level1Audio.isPlaying && !Level2Audio.isPlaying && !Level3Audio.isPlaying && !Level4Audio.isPlaying)
         {
             GodModeAudio.Play();
@@ -225,6 +230,7 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (Level2GodSpot == null) { return; }
         if (GameManager.Instance.Mode == GameMode.PLATFORM_MODE)
         {
             GodModeAudio.volume = Mathf.Lerp(GodModeAudio.volume, 0, 20f*Time.fixedDeltaTime);
