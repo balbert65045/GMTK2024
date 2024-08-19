@@ -7,7 +7,10 @@ public class Fly : MonoBehaviour
     [SerializeField] int WebAmount = 20;
     public int GetWebAmount() { return WebAmount; }
     bool isEaten = false;
-    public void SetIsEatenTrue() { isEaten = true; }
+    public void SetIsEatenTrue() {
+        GetComponent<BugAnimationController>().Webbed();
+        isEaten = true;
+    }
     public bool GetIsEaten() { return isEaten; }
 
     private void OnTriggerEnter2D(Collider2D collision)
