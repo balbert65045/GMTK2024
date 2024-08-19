@@ -91,7 +91,6 @@ public class WebShooter : MonoBehaviour
     {
         if (!webShootingEnabled) { return; }
         if (flyRetracting) { return; }
-        Debug.Log("Shooting");
         AudioManager.Instance.PlayWebShot();
         GetComponent<PlayerAnimation>().Shoot();
         currentProjectile = Instantiate(WebProjectilePrefab, ShootPoint.transform.position, Quaternion.identity);
@@ -134,7 +133,6 @@ public class WebShooter : MonoBehaviour
             flyRetracting.transform.position = flyRetracting.transform.position + (dir * RetractSpeed * Time.fixedDeltaTime);
             if ((ShootPoint.transform.position - flyRetracting.transform.position).magnitude < .4f)
             {
-                Debug.Log("Destorying fly");
                 //EatFly and give points to build with
                 GetComponent<PlayerAnimation>().Eat();
                 AudioManager.Instance.PlayEatFly(.1f);

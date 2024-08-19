@@ -7,6 +7,10 @@ public class GameManager : MonoBehaviour
     public GameMode Mode { get; private set; }
     public UnityEvent<GameMode> GameModeChangedEvent;
 
+    public bool Paused;
+    public void SetPaused(bool value) { 
+        Paused = value;
+    }
     private void Awake()
     {
         if (Instance == null)

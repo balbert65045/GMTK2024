@@ -21,6 +21,8 @@ public class InputHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.Paused) { return; }
+
         if (Input.GetKeyDown(KeyCode.LeftShift) && playerMovement.GetComponent<PlayerStateManager>().currentGodPointTouching != null) {
             Move(Vector2.zero);
             GameManager.Instance.ToggleGameMode();
