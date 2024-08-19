@@ -7,11 +7,13 @@ public class FlyAI : MonoBehaviour
 
     Vector3 spawnLocation;
     Vector3 target;
+    Fly fly;
 
     enum FlyAIState
     {
         RANDOM_MOVEMENT,
-        IDLE
+        IDLE,
+        EATEN
     }
 
     FlyAIState aiState = FlyAIState.IDLE;
@@ -20,6 +22,7 @@ public class FlyAI : MonoBehaviour
     {
         spawnLocation = this.gameObject.transform.position;
         aiState = FlyAIState.RANDOM_MOVEMENT;
+        fly = GetComponent<Fly>();
     }
 
     void Update()
@@ -36,11 +39,14 @@ public class FlyAI : MonoBehaviour
                 break;
             case FlyAIState.IDLE:
                 break;
+            case FlyAIState.EATEN:
+                break;
         }
     }
 
     public virtual void RunRandomMovement()
     {
+        if (fly.GetIsEaten()) aiState = FlyAIState.EATEN;
         if (target == null || this.transform.position == target)
             SetRandomTarget();
         else
@@ -50,5 +56,10 @@ public class FlyAI : MonoBehaviour
     void SetRandomTarget()
     {
         target = spawnLocation + (Vector3)(radius * UnityEngine.Random.insideUnitCircle);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        SetRandomTarget();
     }
 }
