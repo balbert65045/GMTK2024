@@ -56,8 +56,8 @@ public class WebProjectile : MonoBehaviour
     public void Detach()
     {
         attachedToSpider = false;
-        webEnd = Instantiate(WebEnd, webShooter.transform.position, Quaternion.identity);
-        Vector2 dir = ((Vector2)transform.position - (Vector2)webShooter.transform.position).normalized;
+        webEnd = Instantiate(WebEnd, webShooter.ShootPoint.transform.position, Quaternion.identity);
+        Vector2 dir = ((Vector2)transform.position - (Vector2)webShooter.ShootPoint.transform.position).normalized;
         webEnd.GetComponent<Rigidbody2D>().velocity = dir * GetComponent<Rigidbody2D>().velocity.magnitude;
     }
 
@@ -67,8 +67,8 @@ public class WebProjectile : MonoBehaviour
         if (attachedToSpider)
         {
             lineRenderer.SetPosition(0, transform.position);
-            lineRenderer.SetPosition(1, webShooter.transform.position);
-            float distance = Vector3.Magnitude(transform.position - webShooter.transform.position);
+            lineRenderer.SetPosition(1, webShooter.ShootPoint.transform.position);
+            float distance = Vector3.Magnitude(transform.position - webShooter.ShootPoint.transform.position);
             if (distance > maxWebDistance) { 
                 Detach();
             }
@@ -84,10 +84,10 @@ public class WebProjectile : MonoBehaviour
     {
         if (attachedToSpider)
         {
-            Vector2 diff = transform.position - webShooter.transform.position;
+            Vector2 diff = transform.position - webShooter.ShootPoint.transform.position;
             float distance = diff.magnitude;
-            Vector2 dir = Vector3.Normalize(transform.position - webShooter.transform.position);
-            RaycastHit2D hit = Physics2D.Raycast(webShooter.transform.position, dir, distance, LayerMask.GetMask("Platform"));
+            Vector2 dir = Vector3.Normalize(transform.position - webShooter.ShootPoint.transform.position);
+            RaycastHit2D hit = Physics2D.Raycast(webShooter.ShootPoint.transform.position, dir, distance, LayerMask.GetMask("Platform"));
             if (hit.collider != null)
             {
                 webShooter.ConnectWeb(hit.point);

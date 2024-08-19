@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
     private float _wallJumpStartTime;
     private int _lastWallJumpDir;
 
-    private Vector2 _moveInput;
+    public Vector2 _moveInput;
 
     //Set all of these up in the inspector
     [Header("Checks")]
