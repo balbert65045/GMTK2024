@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.UIElements;
 
 public enum BlockType {
     SQUARE,
@@ -15,6 +13,7 @@ public enum BlockType {
 public class Block : MonoBehaviour
 {
     [SerializeField] private BlockType _blockType;
+    [SerializeField] private bool _isStaticBlock = false;
     private List<Vector2> _gridPositions = new List<Vector2>();
     private GridSelectionManager _gridSelectionManager;
 
@@ -31,20 +30,29 @@ public class Block : MonoBehaviour
 
     void Start()
     {
-        _gridSelectionManager = FindObjectOfType<GridSelectionManager>();
-        GridTile gridTile = _gridSelectionManager.GetTileOver();
-        List<GridTile> selectedTiles = gridTile.GetCurrentHighlightedTiles();
-
-        if (_blockType == BlockType.SQUARE)
+        if (!_isStaticBlock)
         {
-            _gridPositions.Add(gridTile.GetGridPosition());
+            _gridSelectionManager = FindObjectOfType<GridSelectionManager>();
+            GridTile gridTile = _gridSelectionManager.GetTileOver();
+            List<GridTile> selectedTiles = gridTile.GetCurrentHighlightedTiles();
+
+            if (_blockType == BlockType.SQUARE)
+            {
+                _gridPositions.Add(gridTile.GetGridPosition());
+            }
+            else
+            {
+                foreach (GridTile tile in selectedTiles)
+                {
+                    _gridPositions.Add(tile.GetGridPosition());
+                }
+            }
         }
         else
         {
-            foreach (GridTile tile in selectedTiles)
-            {
-                _gridPositions.Add(tile.GetGridPosition());
-            }
+
+            
+
         }
     }
 
@@ -103,5 +111,30 @@ public class Block : MonoBehaviour
     public void ClearGridPositions()
     {
         _gridPositions.Clear();
+    }
+
+    public bool IsBlockStatic()
+    {
+        return _isStaticBlock;
+    }
+
+    public void SetStaticPosition()
+    {
+        GameObject[] gridTiles = GameObject.FindGameObjectsWithTag("GridTile");
+        foreach (GameObject gridTile in gridTiles)
+        {
+            GridTile tile = gridTile.GetComponent<GridTile>();
+            if (tile.transform.position == transform.position)
+            {
+                Debug.Log("Found tile");
+                tile.SetBlockHolding(this);
+
+                List<GridTile> neighbors = tile.GetTileNeighbors(GetNeighbors());
+                foreach (GridTile neighbor in neighbors)
+                {
+                    neighbor.SetBlockHolding(this);
+                }
+            }
+        }
     }
 }

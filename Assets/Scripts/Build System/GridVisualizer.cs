@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class GridVisualizer : MonoBehaviour
@@ -15,7 +16,8 @@ public class GridVisualizer : MonoBehaviour
     {
         _grid = new GridTile[_gridWidth, _gridHeight];
         CreateGrid();
-        //HideGrid();
+
+        StartCoroutine(CheckForStaticBlocks());
     }
 
     public void HideGrid()
@@ -64,6 +66,20 @@ public class GridVisualizer : MonoBehaviour
         }
     }
 
+    private IEnumerator CheckForStaticBlocks()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        GameObject[] Block = GameObject.FindGameObjectsWithTag("Block");
+        foreach (GameObject block in Block)
+        {
+            if (block.GetComponent<Block>().IsBlockStatic())
+            {
+                block.GetComponent<Block>().SetStaticPosition();
+            }
+        }
+    }
+
     public GridTile[,] GetGrid()
     {
         return _grid;
@@ -77,5 +93,16 @@ public class GridVisualizer : MonoBehaviour
     public int GetHeight()
     {
         return _gridHeight;
+    }
+
+    public Vector2 TranslateToGridPosition(Vector3 worldPosition)
+    {
+        float x = worldPosition.x + (_gridWidth * _tileSize / 2);
+        float y = worldPosition.y + (_gridHeight * _tileSize / 2);
+
+        x = x / _tileSize;
+        y = y / _tileSize;
+
+        return new Vector2((int)x, (int)y);
     }
 }

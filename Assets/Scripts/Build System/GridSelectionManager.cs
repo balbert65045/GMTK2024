@@ -96,7 +96,7 @@ public class GridSelectionManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 if (_tileOver == null) return;
-                if (_tileOver.GetBlockHolding() != null)
+                if (_tileOver.GetBlockHolding() != null && _tileOver.GetBlockHolding().IsBlockStatic() == false)
                 {
                     AudioManager.Instance.PlaySelect();
                     _blockMoving = _tileOver.GetBlockHolding();
@@ -159,7 +159,7 @@ public class GridSelectionManager : MonoBehaviour
 
             if (Input.GetMouseButtonDown(1))
             {
-                if (_tileOver != null && _tileOver.GetBlockHolding() != null)
+                if (_tileOver != null && _tileOver.GetBlockHolding() != null && _tileOver.GetBlockHolding().IsBlockStatic() == false)
                 {
                     Block block = _tileOver.GetBlockHolding();
                     foreach (GridTile tile in block.tilesCurrentlyOn)

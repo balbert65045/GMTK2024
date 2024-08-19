@@ -328,7 +328,10 @@ public class GridTile : MonoBehaviour
         return new Vector2(_gridX, _gridY);
     }
 
-    public Block GetBlockHolding() { return _blockHolding; }
+    public Block GetBlockHolding() 
+    {
+        return _blockHolding; 
+    }
 
     public void SetBlockHolding(Block block) { _blockHolding = block; }
 
