@@ -20,7 +20,7 @@ public class GridSelectionManager : MonoBehaviour
     public static GridSelectionManager Instance;
     [SerializeField] InventoryController inventoryController;
 
-
+    public bool DraggingFromDock = false;
     public GridTile lastGoodMovingTile;
 
     private void Awake()
@@ -107,6 +107,7 @@ public class GridSelectionManager : MonoBehaviour
                 }
                 else
                 {
+                    //Making Block from scratch 1
                     if (webCostForBlock > WebResourceController.Instance.GetWebCount()) { return; }
                     if (_prefabBlockPlacing == null) return;
                     bool canPlace = _tileOver.GetCanPlace();
@@ -115,6 +116,7 @@ public class GridSelectionManager : MonoBehaviour
                     GameObject block = Instantiate(_prefabBlockPlacing);
                     block.GetComponent<Block>().SetCost(webCostForBlock);
                     block.transform.position = _tileOver.transform.position;
+                    block.transform.parent = FindObjectOfType<GridVisualizer>().GridObjectParent.transform;
                     WebResourceController.Instance.DecrementWebCount(webCostForBlock);
                     SetBlockOnTile(block.GetComponent<Block>());
                     //SetBlockOnTile(block.GetComponent<Block>());
@@ -127,6 +129,24 @@ public class GridSelectionManager : MonoBehaviour
                 {
                     SetBlockOnLastGoodTile(_blockMoving.GetComponent<Block>());
                     _blockMoving = null;
+                }
+                if (DraggingFromDock)
+                {
+                    //Making Block from scratch 2
+                    DraggingFromDock = false;
+                    if (_tileOver == null) return;
+                    if (webCostForBlock > WebResourceController.Instance.GetWebCount()) { return; }
+                    if (_prefabBlockPlacing == null) return;
+                    bool canPlace = _tileOver.GetCanPlace();
+                    if (!canPlace) return;
+                    //NEED to check neighbors as well here!
+                    GameObject block = Instantiate(_prefabBlockPlacing);
+                    block.GetComponent<Block>().SetCost(webCostForBlock);
+                    block.transform.position = _tileOver.transform.position;
+                    block.transform.parent = FindObjectOfType<GridVisualizer>().GridObjectParent.transform;
+                    WebResourceController.Instance.DecrementWebCount(webCostForBlock);
+                    SetBlockOnTile(block.GetComponent<Block>());
+                    //SetBlockOnTile(block.GetComponent<Block>());
                 }
             }
 
@@ -191,17 +211,21 @@ public class GridSelectionManager : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Delete))
             {
+                /*
                 _moveToolEnabled = false;
                 _deleteModeEnabled = !_deleteModeEnabled;
+                */
             }
 
             //temporary code to test move tool
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                /*
                 if (_blockMoving != null) return;
                 _deleteModeEnabled = false;
                 _moveToolEnabled = !_moveToolEnabled;
                 ClearHighlights();
+                */
             }
             
                     

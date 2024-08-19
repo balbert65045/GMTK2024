@@ -43,15 +43,13 @@ public class GridTile : MonoBehaviour
 
         List<Vector2> blockNeighbors = selectedBlock.GetNeighbors();
         //Need to adjust this!!!
-        GameObject[] allBlocks = GameObject.FindGameObjectsWithTag("Block");
+        Block[] allBlocks = GetComponentInParent<GridVisualizer>().GridObjectParent.GetComponentsInChildren<Block>();
         List<Block> blockComponents = new List<Block>();
-        foreach(GameObject block in allBlocks)
+        foreach(Block block in allBlocks)
         {
-            Debug.Log(block.name);
-            if (block.GetComponent<Block>().Moving) { continue; }
-            blockComponents.Add(block.GetComponent<Block>());
+            if (block.Moving) { continue; }
+            blockComponents.Add(block);
         }
-        Debug.Log(blockComponents.Count);
         //Block[] blockComponents = GetBlockComponents(blocks);
         Color colorToSet = _cantPlaceColor;
 
@@ -165,7 +163,6 @@ public class GridTile : MonoBehaviour
 
     private void HighlightNeighborTiles(List<Vector2> blockNeighbors, Color colorToSet)
     {
-        Debug.Log("Checking neighbors");
         GridVisualizer gridVisualizer = GetComponentInParent<GridVisualizer>();
         GridTile[,] grid = gridVisualizer.GetGrid();
 

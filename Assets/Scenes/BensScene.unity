@@ -1124,6 +1124,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &294678755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 294678756}
+  m_Layer: 6
+  m_Name: Grid1Objects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &294678756
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294678755}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &369044784
 GameObject:
   m_ObjectHideFlags: 0
@@ -1335,6 +1366,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7458052270315230347, guid: f80b1c32ed4aefb42942efb14a3fc5fe, type: 3}
   m_PrefabInstance: {fileID: 1552478016}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &480329428
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 480329429}
+  m_Layer: 6
+  m_Name: Grid3Objects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &480329429
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480329428}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &493172419
 GameObject:
   m_ObjectHideFlags: 0
@@ -2276,6 +2338,8 @@ MonoBehaviour:
   _deleteModeEnabled: 0
   _prefabBlockPlacing: {fileID: 0}
   inventoryController: {fileID: 1076432231}
+  DraggingFromDock: 0
+  lastGoodMovingTile: {fileID: 0}
 --- !u!4 &848800564 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8228736005780628560, guid: acc8addd623230a4aa0f164ff329203a, type: 3}
@@ -3731,6 +3795,7 @@ MonoBehaviour:
   _gridHeight: 15
   _tileSize: 1
   _gridScale: 0.98
+  GridObjectParent: {fileID: 1514152652}
 --- !u!4 &1287843506
 Transform:
   m_ObjectHideFlags: 0
@@ -4149,6 +4214,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10e3c70c1665c974db9ebbfcce3a320a, type: 3}
+--- !u!1 &1514152652
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1514152653}
+  m_Layer: 6
+  m_Name: Grid2Objects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1514152653
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514152652}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1522423727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4673,6 +4769,7 @@ MonoBehaviour:
   _gridHeight: 15
   _tileSize: 1
   _gridScale: 0.98
+  GridObjectParent: {fileID: 1854225325}
 --- !u!4 &1593388555
 Transform:
   m_ObjectHideFlags: 0
@@ -5627,6 +5724,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &1854225325
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1854225326}
+  m_Layer: 6
+  m_Name: Grid4Objects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1854225326
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1854225325}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1866552055
 GameObject:
   m_ObjectHideFlags: 0
@@ -6235,6 +6363,7 @@ MonoBehaviour:
   _gridHeight: 15
   _tileSize: 1
   _gridScale: 0.98
+  GridObjectParent: {fileID: 480329428}
 --- !u!4 &1964257794
 Transform:
   m_ObjectHideFlags: 0
@@ -6283,6 +6412,7 @@ MonoBehaviour:
   _gridHeight: 15
   _tileSize: 1
   _gridScale: 0.98
+  GridObjectParent: {fileID: 294678755}
 --- !u!4 &1974901723
 Transform:
   m_ObjectHideFlags: 0
@@ -6859,6 +6989,10 @@ SceneRoots:
   - {fileID: 1287843506}
   - {fileID: 1964257794}
   - {fileID: 1593388555}
+  - {fileID: 294678756}
+  - {fileID: 1514152653}
+  - {fileID: 480329429}
+  - {fileID: 1854225326}
   - {fileID: 493172420}
   - {fileID: 848390012}
   - {fileID: 246384311}

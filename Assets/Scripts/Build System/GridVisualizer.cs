@@ -9,6 +9,8 @@ public class GridVisualizer : MonoBehaviour
     [SerializeField] private float _gridScale = 0.98f;
     private GridTile[,] _grid;
 
+    public GameObject GridObjectParent;
+
     private void Start()
     {
         _grid = new GridTile[_gridWidth, _gridHeight];
