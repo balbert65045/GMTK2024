@@ -28,6 +28,16 @@ public class PlayerAnimation : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
     }
 
+    public void Stun()
+    {
+        animator.SetBool("Stunned", true);
+    }
+
+    public void UnStun()
+    {
+        animator.SetBool("Stunned", false);
+    }
+
     public void Shoot()
     {
         animator.SetTrigger("Shoot");

@@ -63,8 +63,19 @@ public class WebShooter : MonoBehaviour
         //ropeRenderer
     }
 
+    bool webShootingEnabled = true;
+
+    public void SetWebShooting(bool value) { 
+        webShootingEnabled = value;
+        if(value == false && ropeJoint.enabled)
+        {
+            ResetRope();
+        }
+    }
+
     public void FireWeb()
     {
+        if (!webShootingEnabled) { return; }
         if (flyRetracting) { return; }
         Debug.Log("Shooting");
         GetComponent<PlayerAnimation>().Shoot();

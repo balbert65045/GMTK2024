@@ -120,6 +120,7 @@ public class PlayerMovement : MonoBehaviour
     bool allowJump = true;
 
     public bool allowMoveInputs = true;
+
     public void DisableMoveInputs()
     {
         allowMoveInputs = false;

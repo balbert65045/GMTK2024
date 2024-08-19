@@ -19,6 +19,7 @@ public class WebProjectile : MonoBehaviour
             Debug.Log("Hit Fly");
             if (attachedToSpider)
             {
+                collision.GetComponent<Fly>().SetIsEatenTrue();
                 webShooter.RetractFly(collision.transform.GetComponent<Fly>());
                 Destroy(this.gameObject);
                 return;
