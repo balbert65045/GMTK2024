@@ -156,7 +156,7 @@ MonoBehaviour:
   Level2Audio: {fileID: 1817194793}
   Level3Audio: {fileID: 1282568270}
   Level4Audio: {fileID: 1958633878}
-  Player: {fileID: 0}
+  Player: {fileID: 1258362816}
   Level1GodSpot: {fileID: 2093877368}
   Level2GodSpot: {fileID: 595356637}
   Level3GodSpot: {fileID: 71397440}
@@ -983,6 +983,7 @@ GameObject:
   - component: {fileID: 369044787}
   - component: {fileID: 369044786}
   - component: {fileID: 369044785}
+  - component: {fileID: 369044789}
   m_Layer: 10
   m_Name: Fly (6)
   m_TagString: Untagged
@@ -1078,7 +1079,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.01737976, g: 1, b: 0, a: 1}
   m_FlipX: 0
@@ -1105,6 +1106,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &369044789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369044784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e23a1c51cb6c24906bdd7e0969781c00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  radius: 1
 --- !u!1 &371011436
 GameObject:
   m_ObjectHideFlags: 0
@@ -2040,6 +2055,7 @@ GameObject:
   - component: {fileID: 793089665}
   - component: {fileID: 793089664}
   - component: {fileID: 793089663}
+  - component: {fileID: 793089667}
   m_Layer: 10
   m_Name: Fly (2)
   m_TagString: Untagged
@@ -2135,7 +2151,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.01737976, g: 1, b: 0, a: 1}
   m_FlipX: 0
@@ -2162,6 +2178,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &793089667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793089662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e23a1c51cb6c24906bdd7e0969781c00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  radius: 1
 --- !u!1 &848390010
 GameObject:
   m_ObjectHideFlags: 0
@@ -2769,6 +2799,7 @@ GameObject:
   - component: {fileID: 1128248711}
   - component: {fileID: 1128248710}
   - component: {fileID: 1128248709}
+  - component: {fileID: 1128248713}
   m_Layer: 10
   m_Name: Fly (3)
   m_TagString: Untagged
@@ -2864,7 +2895,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.01737976, g: 1, b: 0, a: 1}
   m_FlipX: 0
@@ -2891,6 +2922,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1128248713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1128248708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e23a1c51cb6c24906bdd7e0969781c00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  radius: 1
 --- !u!1 &1176173273
 GameObject:
   m_ObjectHideFlags: 0
@@ -3036,6 +3081,7 @@ GameObject:
   - component: {fileID: 1257221095}
   - component: {fileID: 1257221094}
   - component: {fileID: 1257221093}
+  - component: {fileID: 1257221097}
   m_Layer: 10
   m_Name: Fly (7)
   m_TagString: Untagged
@@ -3131,7 +3177,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.01737976, g: 1, b: 0, a: 1}
   m_FlipX: 0
@@ -3158,6 +3204,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1257221097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257221092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e23a1c51cb6c24906bdd7e0969781c00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  radius: 1
 --- !u!1 &1258362816
 GameObject:
   m_ObjectHideFlags: 0
@@ -3209,6 +3269,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentGodPointTouching: {fileID: 0}
   currentGridOn: {fileID: 0}
+  isStunned: 0
+  StunDurration: 0.5
+  InvincibleDurration: 0.5
+  StunForce: 10
 --- !u!232 &1258362819
 DistanceJoint2D:
   m_ObjectHideFlags: 0
@@ -4067,6 +4131,25 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: acc8addd623230a4aa0f164ff329203a, type: 3}
+--- !u!1 &1533005707 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3752909298574522630, guid: 5a8f9c9e5f513684fb04237a12e9e128, type: 3}
+  m_PrefabInstance: {fileID: 6097039610949662273}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1533005708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1533005707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e23a1c51cb6c24906bdd7e0969781c00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  radius: 1
 --- !u!1001 &1552478016
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4140,6 +4223,7 @@ GameObject:
   - component: {fileID: 1556698403}
   - component: {fileID: 1556698402}
   - component: {fileID: 1556698401}
+  - component: {fileID: 1556698405}
   m_Layer: 10
   m_Name: Fly (1)
   m_TagString: Untagged
@@ -4235,7 +4319,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.01737976, g: 1, b: 0, a: 1}
   m_FlipX: 0
@@ -4262,6 +4346,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1556698405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1556698400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e23a1c51cb6c24906bdd7e0969781c00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 4
+  radius: 3
 --- !u!1 &1591448209
 GameObject:
   m_ObjectHideFlags: 3
@@ -5036,6 +5134,7 @@ GameObject:
   - component: {fileID: 1777549714}
   - component: {fileID: 1777549713}
   - component: {fileID: 1777549712}
+  - component: {fileID: 1777549716}
   m_Layer: 10
   m_Name: Fly (5)
   m_TagString: Untagged
@@ -5131,7 +5230,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.01737976, g: 1, b: 0, a: 1}
   m_FlipX: 0
@@ -5158,6 +5257,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1777549716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777549711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e23a1c51cb6c24906bdd7e0969781c00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  radius: 1
 --- !u!1 &1817194791
 GameObject:
   m_ObjectHideFlags: 0
@@ -5725,6 +5838,7 @@ GameObject:
   - component: {fileID: 1949859951}
   - component: {fileID: 1949859950}
   - component: {fileID: 1949859949}
+  - component: {fileID: 1949859953}
   m_Layer: 10
   m_Name: Fly (4)
   m_TagString: Untagged
@@ -5820,7 +5934,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.01737976, g: 1, b: 0, a: 1}
   m_FlipX: 0
@@ -5847,6 +5961,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1949859953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949859948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e23a1c51cb6c24906bdd7e0969781c00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  radius: 1
 --- !u!1 &1958633877
 GameObject:
   m_ObjectHideFlags: 0
@@ -6494,6 +6622,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3475907746479188965, guid: 5a8f9c9e5f513684fb04237a12e9e128, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3720955186897556684, guid: 5a8f9c9e5f513684fb04237a12e9e128, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.18
@@ -6541,7 +6673,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3752909298574522630, guid: 5a8f9c9e5f513684fb04237a12e9e128, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1533005708}
   m_SourcePrefab: {fileID: 100100000, guid: 5a8f9c9e5f513684fb04237a12e9e128, type: 3}
 --- !u!1001 &8506329241807732252
 PrefabInstance:

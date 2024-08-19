@@ -9,4 +9,13 @@ public class Fly : MonoBehaviour
     bool isEaten = false;
     public void SetIsEatenTrue() { isEaten = true; }
     public bool GetIsEaten() { return isEaten; }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (isEaten) { return; }
+        if (collision.GetComponent<PlayerMovement>() != null)
+        {
+            collision.GetComponent<PlayerStateManager>().Stun(this.transform.position);
+        }
+    }
 }
