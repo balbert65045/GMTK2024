@@ -200,7 +200,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8277449335595458105}
         m_TargetAssemblyTypeName: InventorySlotUI, Assembly-CSharp
-        m_MethodName: OnSlotButton
+        m_MethodName: ButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

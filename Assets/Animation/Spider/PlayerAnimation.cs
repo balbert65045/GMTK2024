@@ -63,6 +63,7 @@ public class PlayerAnimation : MonoBehaviour
         {
             if (grounded)
             {
+                AudioManager.Instance.StopWalk();
                 grounded = false;
                 animator.SetBool("Grounded", false);
             }
@@ -72,6 +73,7 @@ public class PlayerAnimation : MonoBehaviour
             if (!grounded)
             {
                 grounded = true;
+                AudioManager.Instance.PlayLand();
                 animator.SetBool("Grounded", true);
             }
         }
@@ -92,6 +94,9 @@ public class PlayerAnimation : MonoBehaviour
                 animator.SetBool("Moving", false);
             }
         }
+
+        if(grounded && moving) { AudioManager.Instance.PlayWalk(); }
+        else { AudioManager.Instance.StopWalk(); }
     }
 
     public void ChangeAnimationState(PlayerAnimationState newState)

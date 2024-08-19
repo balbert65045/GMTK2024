@@ -95,6 +95,7 @@ public class GridSelectionManager : MonoBehaviour
                 if (_tileOver == null) return;
                 if (_tileOver.GetBlockHolding() != null)
                 {
+                    AudioManager.Instance.PlaySelect();
                     _blockMoving = _tileOver.GetBlockHolding();
                     _blockMoving.Moving = true;
                     foreach (GridTile tile in _blockMoving.tilesCurrentlyOn)
@@ -119,6 +120,7 @@ public class GridSelectionManager : MonoBehaviour
                     block.transform.parent = FindObjectOfType<GridVisualizer>().GridObjectParent.transform;
                     WebResourceController.Instance.DecrementWebCount(webCostForBlock);
                     SetBlockOnTile(block.GetComponent<Block>());
+                    AudioManager.Instance.PlayTilePlace();
                     //SetBlockOnTile(block.GetComponent<Block>());
                 }
             }
@@ -127,6 +129,7 @@ public class GridSelectionManager : MonoBehaviour
             {
                 if (_blockMoving != null)
                 {
+                    AudioManager.Instance.PlayTilePlace();
                     SetBlockOnLastGoodTile(_blockMoving.GetComponent<Block>());
                     _blockMoving = null;
                 }
@@ -140,6 +143,7 @@ public class GridSelectionManager : MonoBehaviour
                     bool canPlace = _tileOver.GetCanPlace();
                     if (!canPlace) return;
                     //NEED to check neighbors as well here!
+                    AudioManager.Instance.PlayTilePlace();
                     GameObject block = Instantiate(_prefabBlockPlacing);
                     block.GetComponent<Block>().SetCost(webCostForBlock);
                     block.transform.position = _tileOver.transform.position;

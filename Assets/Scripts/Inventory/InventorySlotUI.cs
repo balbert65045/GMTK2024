@@ -45,6 +45,11 @@ public class InventorySlotUI : MonoBehaviour
             return true;
     }
 
+    public void ButtonClicked()
+    {
+        OnSlotButton();
+    }
+
     public void OnSlotButton()
     {
         Debug.Log("Button Clicked: " + blockType.ToString());

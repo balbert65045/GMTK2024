@@ -44,7 +44,6 @@ public class Block : MonoBehaviour
             foreach (GridTile tile in selectedTiles)
             {
                 _gridPositions.Add(tile.GetGridPosition());
-                Debug.Log(_gridPositions[_gridPositions.Count -1]);
             }
         }
     }

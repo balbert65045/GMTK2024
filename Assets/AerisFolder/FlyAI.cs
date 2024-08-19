@@ -57,7 +57,6 @@ public class FlyAI : MonoBehaviour
     void SetRandomTarget()
     {
         target = spawnLocation + (Vector3)(radius * UnityEngine.Random.insideUnitCircle);
-        Debug.Log(target);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

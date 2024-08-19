@@ -34,16 +34,30 @@ public class WebShooter : MonoBehaviour
         _swingInput = moveInput;
     }
     //
+    bool SwungLeft = false;
+    bool SwungRight = false;
     void DoSwing()
     {
         if (transform.position.y < ropeAnchor.y - (ropeJoint.distance / 1.5))
         {
             if (GetComponent<Rigidbody2D>().velocity.x < 0 && _swingInput.x < 0)
             {
+                if (!SwungLeft)
+                {
+                    SwungRight = false;
+                    SwungLeft = true;
+                    AudioManager.Instance.SwingWebLeft();
+                }
                 GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Clamp(GetComponent<Rigidbody2D>().velocity.x - (swingSpeed * Time.deltaTime), -1 * MaxSwingVel, MaxSwingVel), GetComponent<Rigidbody2D>().velocity.y);
             }
             else if (GetComponent<Rigidbody2D>().velocity.x > 0 && _swingInput.x > 0)
             {
+                if (!SwungRight)
+                {
+                    SwungLeft = false;
+                    SwungRight = true;
+                    AudioManager.Instance.SwingWebRight();
+                }
                 GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Clamp(GetComponent<Rigidbody2D>().velocity.x + (swingSpeed * Time.deltaTime), -1 * MaxSwingVel, MaxSwingVel), GetComponent<Rigidbody2D>().velocity.y);
             }
         }
@@ -57,9 +71,9 @@ public class WebShooter : MonoBehaviour
 
     public void RetractFly(Fly fly)
     {
+        AudioManager.Instance.PlayFlyCatch();
         flyRetracting = fly;
         ropeRenderer.enabled = true;
-
         //ropeRenderer
     }
 
@@ -78,6 +92,7 @@ public class WebShooter : MonoBehaviour
         if (!webShootingEnabled) { return; }
         if (flyRetracting) { return; }
         Debug.Log("Shooting");
+        AudioManager.Instance.PlayWebShot();
         GetComponent<PlayerAnimation>().Shoot();
         currentProjectile = Instantiate(WebProjectilePrefab, ShootPoint.transform.position, Quaternion.identity);
         currentProjectile.GetComponent<Rigidbody2D>().velocity = WebDir * webShotSpeed;
@@ -85,6 +100,9 @@ public class WebShooter : MonoBehaviour
     
     public void ConnectWeb(Vector3 pos)
     {
+        SwungLeft = false;
+        SwungRight = false;
+        AudioManager.Instance.PlayWebLatch();
         currentProjectile = null;
         ConnectRope(pos);
     }
@@ -119,6 +137,7 @@ public class WebShooter : MonoBehaviour
                 Debug.Log("Destorying fly");
                 //EatFly and give points to build with
                 GetComponent<PlayerAnimation>().Eat();
+                AudioManager.Instance.PlayEatFly(.1f);
                 WebResourceController.Instance.IncrementWebCount(flyRetracting.GetWebAmount());
                 ropeRenderer.enabled = false;
                 Destroy(flyRetracting.gameObject);

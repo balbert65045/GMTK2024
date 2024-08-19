@@ -286,6 +286,7 @@ public class GridTile : MonoBehaviour
         FindObjectOfType<GridSelectionManager>().SetTileOver(this);
         if(GridSelectionManager.Instance.GetBlockMoving() != null)
         {
+            AudioManager.Instance.MoveAlongGrid();
             GridSelectionManager.Instance.CheckToPlaceMovingObject();
             UnhighlightTiles();
             return;
@@ -294,6 +295,7 @@ public class GridTile : MonoBehaviour
         {
             GameObject selectedBlock = GridSelectionManager.Instance.GetCurrentPrefab();
             if (selectedBlock == null) return;
+            AudioManager.Instance.MoveAlongGrid();
             HighlightTiles(selectedBlock.GetComponent<Block>());
         }
     }
