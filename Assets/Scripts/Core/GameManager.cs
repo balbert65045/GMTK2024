@@ -7,6 +7,11 @@ public class GameManager : MonoBehaviour
     public GameMode Mode { get; private set; }
     public UnityEvent<GameMode> GameModeChangedEvent;
 
+    public bool Won = false;
+    public void SetWon(bool value) { 
+        Won = value;
+    }
+
     public bool Paused;
     public void SetPaused(bool value) { 
         Paused = value;
