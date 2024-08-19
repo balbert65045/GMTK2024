@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
     private float _wallJumpStartTime;
     private int _lastWallJumpDir;
 
-    private Vector2 _moveInput;
+    public Vector2 _moveInput;
 
     //Set all of these up in the inspector
     [Header("Checks")]
@@ -66,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
 
     public Action OnJump;
     List<Collider2D> allSurfacesTouching;
+
 
 
     //public Collider2D 
@@ -282,6 +283,7 @@ public class PlayerMovement : MonoBehaviour
 
         //Two checks needed for both left and right walls since whenever the play turns the wall checkPoints swap sides
         LastOnWallTime = Mathf.Max(LastOnWallLeftTime, LastOnWallRightTime);
+        if (LastOnWallTime < 0) { disableWallHang = false; }
 
         #endregion
         if (AllGroundColliders.Length > 0 && RB.velocity.y <= .01f)
@@ -345,13 +347,15 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if (!allowMoveInputs) { return; }
+        if (!allowMoveInputs) {
+            SetGravityScale(Data.gravityScale);
+            return; }
         #region GRAVITY
         // if (RB.velocity.y < 0 && _moveInput.y <= 0)
         if (IsWallHanging)
         {
-            SetGravityScale(0);
-            RB.velocity = Vector2.zero;
+            SetGravityScale(Data.gravityScale * 0f);
+            //RB.velocity = Vector2.zero;
         }
         else if (_moveInput.y < -.3f)
         {
@@ -442,23 +446,65 @@ public class PlayerMovement : MonoBehaviour
     }
     #endregion
 
+
+
+    float currentSlippyness = 0f;
+    public void SetNewSliperiness(float slipperiness)
+    {
+        currentSlippyness = slipperiness;
+    }
     //MOVEMENT METHODS
     #region RUN METHODS
     private void Run(float lerpAmount)
     {
         //Calculate the direction we want to move in and our desired velocity
         float targetSpeed = _moveInput.x * Data.runMaxSpeed;
+        float accelRate;
 
         if (IsWallHanging)
         {
+            float vertMultiplier = .75f;
+            float verticalDeccel = Data.runDeccelAmount / vertMultiplier;
             if (LastOnWallLeftTime > 0)
             {
-                RB.AddForce(targetSpeed * Vector2.up * 20, ForceMode2D.Force);
+                //We can reduce are control using Lerp() this smooths changes to are direction and speed
+                targetSpeed = Mathf.Lerp(RB.velocity.y, targetSpeed, lerpAmount) * vertMultiplier;
+                accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? Data.runAccelAmount : (verticalDeccel - (verticalDeccel * currentSlippyness));
+                //
+                //Calculate difference between current velocity and desired velocity
+                float speedDifVert = targetSpeed - RB.velocity.y;
+                //Calculate force along x-axis to apply to thr player
 
+                float movementVert = speedDifVert * accelRate * vertMultiplier;
+                //Convert this to a vector and apply to rigidbody
+
+                RB.AddForce(movementVert * Vector2.up, ForceMode2D.Force);
+
+                //RB.AddForce(targetSpeed * Vector2.up * 20, ForceMode2D.Force);
+                if (touchingGround && _moveInput.x < 0)
+                {
+                    disableWallHang = true;
+                }
             }
             else
             {
-                RB.AddForce(targetSpeed * Vector2.down * 20, ForceMode2D.Force);
+
+                targetSpeed = Mathf.Lerp(RB.velocity.y, targetSpeed, lerpAmount) * vertMultiplier;
+                accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? Data.runAccelAmount : (verticalDeccel - (verticalDeccel * currentSlippyness));
+                //
+                //Calculate difference between current velocity and desired velocity
+                //
+                float speedDifVert = targetSpeed + RB.velocity.y;
+                //Calculate force along x-axis to apply to thr player
+
+                float movementVert = speedDifVert * accelRate;
+                //Convert this to a vector and apply to rigidbody
+
+                RB.AddForce(movementVert * Vector2.down, ForceMode2D.Force);
+                if (touchingGround && _moveInput.x > 0)
+                {
+                    disableWallHang = true;
+                }
             }
             return;
         }
@@ -467,12 +513,11 @@ public class PlayerMovement : MonoBehaviour
         targetSpeed = Mathf.Lerp(RB.velocity.x, targetSpeed, lerpAmount);
 
         #region Calculate AccelRate
-        float accelRate;
 
         //Gets an acceleration value based on if we are accelerating (includes turning) 
         //or trying to decelerate (stop). As well as applying a multiplier if we're air borne.
         if (LastOnGroundTime > 0)
-            accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? Data.runAccelAmount : Data.runDeccelAmount;
+            accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? Data.runAccelAmount : (Data.runDeccelAmount - (Data.runDeccelAmount * currentSlippyness));
         else
             accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? Data.runAccelAmount * Data.accelInAir : Data.runDeccelAmount * Data.deccelInAir;
         #endregion
@@ -594,11 +639,12 @@ public class PlayerMovement : MonoBehaviour
         return (IsJumping || isDoubleJumping) && RB.velocity.y > 0;
     }
 
+    bool disableWallHang = false;
     public bool CanHang()
     {
         //!IsWallJumping
         if (IsWallJumping) { return false; }
-        if (LastOnWallTime > 0)
+        if (LastOnWallTime > 0 && !disableWallHang)
             return true;
         else
             return false;

@@ -21,6 +21,8 @@ public class WebShooter : MonoBehaviour
     [SerializeField] float LaunchAddY = 1.5f;
     [SerializeField] float LaunchAddX = 1.5f;
 
+    public GameObject ShootPoint;
+
 
     private Vector2 _swingInput;
 
@@ -49,6 +51,7 @@ public class WebShooter : MonoBehaviour
     public void ReleaseWeb()
     {
         if (flyRetracting) { return; }
+        GetComponent<PlayerAnimation>().ConnectedJump();
         ResetRope();
     }
 
@@ -63,7 +66,9 @@ public class WebShooter : MonoBehaviour
     public void FireWeb()
     {
         if (flyRetracting) { return; }
-        currentProjectile = Instantiate(WebProjectilePrefab, transform.position + .1f * Vector3.up, Quaternion.identity);
+        Debug.Log("Shooting");
+        GetComponent<PlayerAnimation>().Shoot();
+        currentProjectile = Instantiate(WebProjectilePrefab, ShootPoint.transform.position, Quaternion.identity);
         currentProjectile.GetComponent<Rigidbody2D>().velocity = WebDir * webShotSpeed;
     }
     
@@ -77,8 +82,8 @@ public class WebShooter : MonoBehaviour
     void Update()
     {
         Vector3 WorldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        WebDir =  ((Vector2)WorldMousePos - (Vector2)transform.position).normalized;
-        ropeRenderer.SetPosition(0, transform.position);
+        WebDir =  ((Vector2)WorldMousePos - (Vector2)ShootPoint.transform.position).normalized;
+        ropeRenderer.SetPosition(0, ShootPoint.transform.position);
         if (flyRetracting != null)
         {
             ropeRenderer.SetPosition(1, flyRetracting.transform.position);
@@ -96,12 +101,13 @@ public class WebShooter : MonoBehaviour
     {
         if (flyRetracting != null)
         {
-            Vector3 dir = (transform.position - flyRetracting.transform.position).normalized;
+            Vector3 dir = (ShootPoint.transform.position - flyRetracting.transform.position).normalized;
             flyRetracting.transform.position = flyRetracting.transform.position + (dir * RetractSpeed * Time.fixedDeltaTime);
-            if ((transform.position - flyRetracting.transform.position).magnitude < .4f)
+            if ((ShootPoint.transform.position - flyRetracting.transform.position).magnitude < .4f)
             {
                 Debug.Log("Destorying fly");
                 //EatFly and give points to build with
+                GetComponent<PlayerAnimation>().Eat();
                 WebResourceController.Instance.IncrementWebCount(flyRetracting.GetWebAmount());
                 ropeRenderer.enabled = false;
                 Destroy(flyRetracting.gameObject);
@@ -125,7 +131,7 @@ public class WebShooter : MonoBehaviour
         {
             ropeJoint.enabled = true;
             ropeJoint.connectedAnchor = ropeAnchor;
-            ropeJoint.distance = Vector2.Distance(transform.position, ropeAnchor);
+            ropeJoint.distance = Vector2.Distance(ShootPoint.transform.position, ropeAnchor);
             GetComponent<PlayerMovement>().DisableMoveInputs();
             locked = true;
         }
@@ -142,7 +148,7 @@ public class WebShooter : MonoBehaviour
     {
         ropeRenderer.enabled = true;
         ropeRenderer.positionCount = 2;
-        ropeRenderer.SetPosition(0, transform.position);
+        ropeRenderer.SetPosition(0, ShootPoint.transform.position);
         ropeRenderer.SetPosition(1, pos);
         ropeAttached = true;
         ropeAnchor = pos;

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class InventorySlotUI : MonoBehaviour
 {
