@@ -33,19 +33,31 @@ public class GridTile : MonoBehaviour
     }
 
 
-    public void HighlightTiles()
+    public void HighlightTiles(Block blockHighlighting)
     {
         _canPlace = true;
-        _gridSelectionManager.SetBlockOver(null);
+        //_gridSelectionManager.SetBlockOver(null);
 
-        Block selectedBlock = _gridSelectionManager.GetCurrentPrefab();
+        Block selectedBlock = blockHighlighting;
         if (selectedBlock == null) return;
 
         List<Vector2> blockNeighbors = selectedBlock.GetNeighbors();
-        GameObject[] blocks = GameObject.FindGameObjectsWithTag("Block");
-        Block[] blockComponents = GetBlockComponents(blocks);
+        //Need to adjust this!!!
+        GameObject[] allBlocks = GameObject.FindGameObjectsWithTag("Block");
+        List<Block> blockComponents = new List<Block>();
+        foreach(GameObject block in allBlocks)
+        {
+            Debug.Log(block.name);
+            if (block.GetComponent<Block>().Moving) { continue; }
+            blockComponents.Add(block.GetComponent<Block>());
+        }
+        Debug.Log(blockComponents.Count);
+        //Block[] blockComponents = GetBlockComponents(blocks);
         Color colorToSet = _cantPlaceColor;
 
+        HandlePlacementTool(selectedBlock, blockComponents, blockNeighbors, colorToSet);
+
+        /*
         if (_gridSelectionManager.IsMoveToolEnabled() && _gridSelectionManager.IsPlacingBlock() == false || _gridSelectionManager.IsDeleteModeEnabled())
         {
             HandleMoveTool();
@@ -54,6 +66,7 @@ public class GridTile : MonoBehaviour
         {
             HandlePlacementTool(selectedBlock, blockComponents, blockNeighbors, colorToSet);
         }
+        */
     }
 
     private void HandleMoveTool()
@@ -70,7 +83,7 @@ public class GridTile : MonoBehaviour
         HighlightCurrentTile();
     }
 
-    private void HandlePlacementTool(Block selectedBlock, Block[] blockComponents, List<Vector2> blockNeighbors, Color colorToSet)
+    private void HandlePlacementTool(Block selectedBlock, List<Block> blockComponents, List<Vector2> blockNeighbors, Color colorToSet)
     {
         if (_blockHolding != null)
         {
@@ -101,6 +114,9 @@ public class GridTile : MonoBehaviour
         if (_renderer == null) return;
         _currentHighlightedTiles.Add(this);
 
+        _renderer.material.color = _canPlace ? GridSelectionManager.Instance.GetHighlightColor() : _cantPlaceColor;
+
+        /*
         if (_gridSelectionManager.IsMoveToolEnabled() && _gridSelectionManager.IsPlacingBlock() == false || _gridSelectionManager.IsDeleteModeEnabled())
         {
             _renderer.material.color = _cantPlaceColor;
@@ -109,6 +125,7 @@ public class GridTile : MonoBehaviour
         {
             _renderer.material.color = _canPlace ? _highlightColor : _cantPlaceColor;
         }
+        */
     }
 
     private Block[] GetBlockComponents(GameObject[] blocks)
@@ -121,7 +138,7 @@ public class GridTile : MonoBehaviour
         return blockComponents;
     }
 
-    private bool IsSquareBlockOverlapping(Block[] blockComponents)
+    private bool IsSquareBlockOverlapping(List<Block> blockComponents)
     {
         foreach (Block block in blockComponents)
         {
@@ -148,6 +165,7 @@ public class GridTile : MonoBehaviour
 
     private void HighlightNeighborTiles(List<Vector2> blockNeighbors, Color colorToSet)
     {
+        Debug.Log("Checking neighbors");
         GridVisualizer gridVisualizer = GetComponentInParent<GridVisualizer>();
         GridTile[,] grid = gridVisualizer.GetGrid();
 
@@ -172,12 +190,14 @@ public class GridTile : MonoBehaviour
 
             if (!_canPlace)
             {
+                Debug.Log("can place is false");
                 HighlightTile(tile, colorToSet);
                 continue;
             }
 
             if (tile._blockHolding != null)
             {
+                Debug.Log("can place is false");
                 _canPlace = false;
                 HighlightCheckedNeighbors(neighborsChecked, colorToSet);
                 HighlightTile(tile, colorToSet);
@@ -231,6 +251,11 @@ public class GridTile : MonoBehaviour
     {
         if (tile != null && tile._renderer != null)
         {
+            // Literally only used as a check could definitely change
+            if (color == _highlightColor)
+            {
+                color = GridSelectionManager.Instance.GetHighlightColor();
+            }
             tile._renderer.material.color = color;
             _currentHighlightedTiles.Add(this);
         }
@@ -262,9 +287,18 @@ public class GridTile : MonoBehaviour
     void OnMouseEnter()
     {
         FindObjectOfType<GridSelectionManager>().SetTileOver(this);
-        Block selectedBlock = FindObjectOfType<GridSelectionManager>().GetCurrentPrefab();
-        if (selectedBlock == null) return;
-        HighlightTiles();
+        if(GridSelectionManager.Instance.GetBlockMoving() != null)
+        {
+            GridSelectionManager.Instance.CheckToPlaceMovingObject();
+            UnhighlightTiles();
+            return;
+        }
+        else
+        {
+            GameObject selectedBlock = GridSelectionManager.Instance.GetCurrentPrefab();
+            if (selectedBlock == null) return;
+            HighlightTiles(selectedBlock.GetComponent<Block>());
+        }
     }
 
     void OnMouseExit()
@@ -273,7 +307,7 @@ public class GridTile : MonoBehaviour
         {
             FindObjectOfType<GridSelectionManager>().SetTileOver(null);
         }
-        Block selectedBlock = FindObjectOfType<GridSelectionManager>().GetCurrentPrefab();
+        GameObject selectedBlock = GridSelectionManager.Instance.GetCurrentPrefab();
         if (selectedBlock == null) return;
         UnhighlightTiles();
     }
@@ -304,4 +338,30 @@ public class GridTile : MonoBehaviour
     public void ClearHighlightedTiles() { _currentHighlightedTiles.Clear(); }
 
     public bool GetCanPlace() { return _canPlace; }
+    public void SetCanPlace(bool value) { _canPlace = value; }
+
+    public bool CanPutBlockHere(Block block)
+    {
+        if (_blockHolding != null) { return false; }
+        if (NeighborOutOfBounds(block.GetNeighbors())) { return false; }
+        List<GridTile> neighbors = GetTileNeighbors(block.GetNeighbors());
+        foreach(GridTile tile in neighbors)
+        {
+            if (tile._blockHolding != null) { return false;}
+        }
+        return true;
+    }
+
+    bool NeighborOutOfBounds(List<Vector2> blockNeighbors)
+    {
+        GridVisualizer gridVisualizer = GetComponentInParent<GridVisualizer>();
+        List<GridTile> tileNeighbors = new List<GridTile>();
+        foreach (Vector2 neighbor in blockNeighbors)
+        {
+            int x = _gridX + (int)neighbor.x;
+            int y = _gridY + (int)neighbor.y;
+            if (x < 0 || x >= gridVisualizer.GetWidth() || y < 0 || y >= gridVisualizer.GetHeight()) { return true; }
+        }
+        return false;
+    }
 }

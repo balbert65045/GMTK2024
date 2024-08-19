@@ -74,7 +74,7 @@ public class BensSelectionManager : MonoBehaviour
         }
         _prefabBlockPlacing = soUsing.Prefab.GetComponent<Block>();
         webCostForBlock = soUsing.Cost;
-        if (_tileOver) { _tileOver.HighlightTiles(); }
+        if (_tileOver) { _tileOver.HighlightTiles(_prefabBlockPlacing); }
     }
     // Update is called once per frame
     void Update()
@@ -112,18 +112,20 @@ public class BensSelectionManager : MonoBehaviour
     public void SetBlockOnTile(Block block)
     {
         WebResourceController.Instance.DecrementWebCount(webCostForBlock);
-        _tileOver.SetBlockHolding(block.GetComponent<Block>());
+        _tileOver.SetBlockHolding(block);
+        block.AddTile(_tileOver);
         List<GridTile> tileNeighbors = _tileOver.GetTileNeighbors(_prefabBlockPlacing.GetNeighbors());
         foreach (GridTile tile in tileNeighbors)
         {
-            tile.SetBlockHolding(block.GetComponent<Block>());
+            block.AddTile(tile);
+            tile.SetBlockHolding(block);
         }
     }
 
     public void SetCurrentPlacingBlock(GameObject BlockPrefab)
     {
         _prefabBlockPlacing = BlockPrefab.GetComponent<Block>();
-        if (_tileOver) _tileOver.HighlightTiles(); 
+       // if (_tileOver) _tileOver.HighlightTiles(); 
     }
 
     public void SetTileOver(GridTile tile)
