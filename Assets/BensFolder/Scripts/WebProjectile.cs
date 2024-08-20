@@ -60,7 +60,16 @@ public class WebProjectile : MonoBehaviour
         webEnd = Instantiate(WebEnd, webShooter.ShootPoint.transform.position, Quaternion.identity);
         Vector2 dir = ((Vector2)transform.position - (Vector2)webShooter.ShootPoint.transform.position).normalized;
         webEnd.GetComponent<Rigidbody2D>().velocity = dir * GetComponent<Rigidbody2D>().velocity.magnitude;
+        StartCoroutine("DestroyAfterLongDelay");
     }
+
+    IEnumerator DestroyAfterLongDelay()
+    {
+        yield return new WaitForSeconds(3f);
+        if (webEnd != null) { Destroy(webEnd.gameObject); }
+        Destroy(this.gameObject);
+    }
+
 
 
     private void Update()

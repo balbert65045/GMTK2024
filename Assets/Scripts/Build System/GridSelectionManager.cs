@@ -30,8 +30,6 @@ public class GridSelectionManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
-
-        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()

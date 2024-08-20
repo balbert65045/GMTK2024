@@ -6,9 +6,14 @@ public class TitleScreenMusic : MonoBehaviour
 {
     [SerializeField] AudioSource titleScreenMusic;
 
-    private void Start()
+    private void Awake()
     {
-       // titleScreenMusic.Play();
+        
+        AudioManager.Instance.Level1Audio.Stop();
+        AudioManager.Instance.Level2Audio.Stop();
+        AudioManager.Instance.Level3Audio.Stop();
+        AudioManager.Instance.Level4Audio.Stop();
+        AudioManager.Instance.GodModeAudio.Stop();
     }
 
 

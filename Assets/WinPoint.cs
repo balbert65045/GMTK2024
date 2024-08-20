@@ -19,6 +19,7 @@ public class WinPoint : MonoBehaviour
         pm._moveInput = Vector2.zero;
         pm.RB.velocity = Vector2.zero;
         winCam.Priority = 3;
+        AudioManager.Instance.PlayWin();
         StartCoroutine("ShowWin");
     }
 

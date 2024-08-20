@@ -9,4 +9,5 @@ public class WebTail : MonoBehaviour
         GetComponent<Rigidbody2D>().gravityScale = 0;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
+
 }
