@@ -14,8 +14,9 @@ public class GridSelectionManager : MonoBehaviour
     private Block _blockMoving;
     public Block GetBlockMoving() { return _blockMoving; }
 
-    private readonly Color _highlightColor = new(0, 1, 0, 0.7f);
-    private readonly Color _cantPlaceColor = new(1, 0, 0, 0.9f);
+    public Color _defaultColor = new(1, 0, 0, 0.9f);
+    public Color _highlightColor = new(0, 1, 0, 0.7f);
+    public Color _cantPlaceColor = new(1, 0, 0, 0.9f);
 
     public static GridSelectionManager Instance;
     [SerializeField] InventoryController inventoryController;
@@ -356,7 +357,7 @@ public class GridSelectionManager : MonoBehaviour
             GameObject[] tiles = GameObject.FindGameObjectsWithTag("GridTile");
             foreach (GameObject tile in tiles)
             {
-                tile.GetComponent<GridTile>().SetColor(new Color(0, 0, 1, 0.5f));
+                tile.GetComponent<GridTile>().SetColor(_defaultColor);
             }
         }
 }
