@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class GridVisualizer : MonoBehaviour
 {
+    [SerializeField] GameObject GridCellPrefab;
     [SerializeField] private int _gridWidth = 16;
     [SerializeField] private int _gridHeight = 9;
     [SerializeField] private float _tileSize = 1.0f;
@@ -48,8 +49,8 @@ public class GridVisualizer : MonoBehaviour
         {
             for (int y = 0; y < _gridHeight; y++)
             {
-
-                GameObject gridTile= GameObject.CreatePrimitive(PrimitiveType.Cube);
+                GameObject gridTile = Instantiate(GridCellPrefab);
+                //GameObject gridTile= GameObject.CreatePrimitive(PrimitiveType.Cube);
                 gridTile.transform.parent = transform;
                 gridTile.transform.localPosition = new Vector3(startX + x * _tileSize, startY + y * _tileSize, 0);
 

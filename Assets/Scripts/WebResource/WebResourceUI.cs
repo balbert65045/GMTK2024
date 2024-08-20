@@ -17,6 +17,6 @@ public class WebCountUI : MonoBehaviour
 
     void UpdateWebCountText(int webCount)
     {
-        webCountText.text = "Web Count: " + webCount;
+        webCountText.text = webCount.ToString();
     }
 }

@@ -4,10 +4,7 @@ using UnityEngine;
 public class GridTile : MonoBehaviour
 {
 
-    private Renderer _renderer;
-    private readonly Color _highlightColor = new(0, 1, 0, 0.7f);
-    private readonly Color _defaultColor = new(0, 0, 1, 0.5f);
-    private readonly Color _cantPlaceColor = new(1, 0, 0, 0.9f);
+    private SpriteRenderer _renderer;
     private List<GridTile> _currentHighlightedTiles = new List<GridTile>();
     private GridSelectionManager _gridSelectionManager;
     private bool _canPlace = true;
@@ -24,11 +21,10 @@ public class GridTile : MonoBehaviour
         gameObject.tag = "GridTile";
         // store reference of the block
 
-        _renderer = GetComponent<Renderer>();
+        _renderer = GetComponentInChildren<SpriteRenderer>();
         if (_renderer != null)
         {
-            _renderer.material.shader = Shader.Find("Transparent/Diffuse");
-            _renderer.material.color = _defaultColor;
+            _renderer.color = GridSelectionManager.Instance._defaultColor;
         }
     }
 
@@ -51,7 +47,7 @@ public class GridTile : MonoBehaviour
             blockComponents.Add(block);
         }
         //Block[] blockComponents = GetBlockComponents(blocks);
-        Color colorToSet = _cantPlaceColor;
+        Color colorToSet = GridSelectionManager.Instance._cantPlaceColor;
 
         HandlePlacementTool(selectedBlock, blockComponents, blockNeighbors, colorToSet);
 
@@ -71,13 +67,13 @@ public class GridTile : MonoBehaviour
     {
         if (_blockHolding != null)
         {
-            HandleBlockHolding(_highlightColor);
+            HandleBlockHolding(GridSelectionManager.Instance._highlightColor);
         }
 
         Block selectedBlock = GetBlockUnderMouse();
         if (selectedBlock == null) return;
 
-        HighlightBlockNeighborTiles(selectedBlock, _cantPlaceColor);
+        HighlightBlockNeighborTiles(selectedBlock, GridSelectionManager.Instance._cantPlaceColor);
         HighlightCurrentTile();
     }
 
@@ -93,7 +89,7 @@ public class GridTile : MonoBehaviour
             if (IsSquareBlockOverlapping(blockComponents))
             {
                 _canPlace = false;
-                _renderer.material.color = _cantPlaceColor;
+                _renderer.color = GridSelectionManager.Instance._cantPlaceColor;
                 return;
             }
         }
@@ -112,7 +108,7 @@ public class GridTile : MonoBehaviour
         if (_renderer == null) return;
         _currentHighlightedTiles.Add(this);
 
-        _renderer.material.color = _canPlace ? GridSelectionManager.Instance.GetHighlightColor() : _cantPlaceColor;
+        _renderer.color = _canPlace ? GridSelectionManager.Instance.GetHighlightColor() : GridSelectionManager.Instance._cantPlaceColor;
 
         /*
         if (_gridSelectionManager.IsMoveToolEnabled() && _gridSelectionManager.IsPlacingBlock() == false || _gridSelectionManager.IsDeleteModeEnabled())
@@ -158,7 +154,7 @@ public class GridTile : MonoBehaviour
     {
         _gridSelectionManager.SetBlockOver(_blockHolding);
         _canPlace = false;
-        _renderer.material.color = colorToSet;
+        _renderer.color = colorToSet;
     }
 
     private void HighlightNeighborTiles(List<Vector2> blockNeighbors, Color colorToSet)
@@ -176,9 +172,9 @@ public class GridTile : MonoBehaviour
 
             if (IsTileOutOfBounds(neighborGridX, neighborGridY, gridVisualizer))
             {
-                HighlightPreviousNeighbors(previousNeighbors, _cantPlaceColor);
+                HighlightPreviousNeighbors(previousNeighbors, GridSelectionManager.Instance._cantPlaceColor);
                 _canPlace = false;
-                _renderer.material.color = _cantPlaceColor;
+                _renderer.color = GridSelectionManager.Instance._cantPlaceColor;
                 continue;
             }
 
@@ -201,7 +197,7 @@ public class GridTile : MonoBehaviour
                 continue;
             }
 
-            HighlightTile(tile, _highlightColor);
+            HighlightTile(tile, GridSelectionManager.Instance._highlightColor);
             previousNeighbors.Add(tile);
         }
     }
@@ -215,7 +211,7 @@ public class GridTile : MonoBehaviour
             if (gridTile == null) continue;
             if (gridTile.GetBlockHolding() == block)
             {
-                gridTile._renderer.material.color = colorToSet;
+                gridTile._renderer.color = colorToSet;
                 _currentHighlightedTiles.Add(gridTile);
             }
         }
@@ -230,7 +226,7 @@ public class GridTile : MonoBehaviour
     {
         foreach (GridTile prevTile in previousNeighbors)
         {
-            prevTile.GetComponent<Renderer>().material.color = color;
+            prevTile.GetComponentInChildren<SpriteRenderer>().color = color;
             _currentHighlightedTiles.Add(prevTile);
         }
     }
@@ -239,7 +235,7 @@ public class GridTile : MonoBehaviour
     {
         foreach (GridTile neighborTile in neighborsChecked)
         {
-            neighborTile._renderer.material.color = color;
+            neighborTile._renderer.color = color;
             _currentHighlightedTiles.Add(neighborTile);
         }
     }
@@ -249,11 +245,11 @@ public class GridTile : MonoBehaviour
         if (tile != null && tile._renderer != null)
         {
             // Literally only used as a check could definitely change
-            if (color == _highlightColor)
+            if (color == GridSelectionManager.Instance._highlightColor)
             {
                 color = GridSelectionManager.Instance.GetHighlightColor();
             }
-            tile._renderer.material.color = color;
+            tile._renderer.color = color;
             _currentHighlightedTiles.Add(this);
         }
     }
@@ -271,12 +267,12 @@ public class GridTile : MonoBehaviour
         return tileNeighbors;
     }
 
-    public static void UnhighlightTiles()
+    public void UnhighlightTiles()
     {
         GameObject[] tiles = GameObject.FindGameObjectsWithTag("GridTile");
         foreach (GameObject tile in tiles)
         {
-            tile.GetComponent<GridTile>().SetColor(new Color(0, 0, 1, 0.5f));
+            tile.GetComponent<GridTile>().SetColor(GridSelectionManager.Instance._defaultColor);
             tile.GetComponent<GridTile>().ClearHighlightedTiles();
         }
     }
@@ -313,7 +309,7 @@ public class GridTile : MonoBehaviour
 
     public void SetColor(Color color)
     {
-        _renderer.material.color = color;
+        _renderer.color = color;
     }
 
 

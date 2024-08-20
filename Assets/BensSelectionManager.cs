@@ -53,7 +53,7 @@ public class BensSelectionManager : MonoBehaviour
         GameObject[] tiles = GameObject.FindGameObjectsWithTag("GridTile");
         foreach (GameObject tile in tiles)
         {
-            tile.GetComponent<GridTile>().SetColor(new Color(0, 0, 1, 0.5f));
+            tile.GetComponent<GridTile>().SetColor(GridSelectionManager.Instance._defaultColor);
         }
     }
 
